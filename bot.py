@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands, tasks
-from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc
+from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote
 from gaming.samplegame import _game
 from gaming.rps import _rps, rpsgame, _duelstats
 from general_commands.registeration import _registered, _register
@@ -72,6 +72,10 @@ async def bwscore(ctx, ign, equation):
 @client.command(aliases=["bwlb"])
 async def bwleaderboard(ctx, equation):
     await _bedwarsleaderboard(ctx, equation)
+
+@client.command()
+async def quote(ctx):
+    await _quote(ctx)
 
 
 @client.command()

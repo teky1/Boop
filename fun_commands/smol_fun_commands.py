@@ -1,4 +1,6 @@
 import discord
+import json
+import random
 import utilities.equation_interpreter as interpreter
 from discord.ext import commands
 
@@ -45,3 +47,27 @@ async def _calc(ctx):
 
     await ctx.send(f"```\n{equation}\nAnswer: {answer}\n```")
 
+
+async def _quote(ctx):
+    names = ctx.message.content.split()[1:]
+    placeholders = ["{A}", "{B}", "{C}", "{D}", "{E}", "{F}"]
+    with open("data/quotes.json", encoding="utf8") as json_file:
+        quote_list = json.load(json_file)["quotes"][len(names) - 1]
+
+    header = "**ScatterPatter's Incorrect Quotes Generator**\n\n"
+    quote = quote_list[random.randint(0, len(quote_list) - 1)]
+    quote = quote.replace("<br>", "\n")
+    quote = quote.replace("*", "\\*")
+    quote = quote.replace("<i>", "*")
+    quote = quote.replace("</i>", "*")
+    for i, item in enumerate(placeholders):
+        if quote.count(item) > 0:
+            quote = quote.replace(item, f"{names[i]}")
+    quote = header + quote
+    # embed = discord.Embed(title="ScatterPatter's Incorrect Quotes Generator",
+    #                       url="https://incorrect-quotes-generator.neocities.org/",
+    #                       description=quote)
+    # embed.add_field(name=quote, value="Check out the website :D", inline=True)
+
+    quote += f"\n\nAll quotes taken from: https://incorrect-quotes-generator.neocities.org/"
+    await ctx.send(quote)
