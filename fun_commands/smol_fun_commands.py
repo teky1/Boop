@@ -16,21 +16,21 @@ async def _boop(ctx, who: discord.User):
 
 async def _repeat(ctx):
     async with ctx.typing():
-        if len(str(ctx.message.content)) > 9:
+        if len(str(ctx.message.content)) > 8:
             if ctx.message.mention_everyone:
-                message = discord.utils.escape_mentions(str(ctx.message.content)[8:])
+                message = discord.utils.escape_mentions(str(ctx.message.content)[7:])
             else:
-                message = str(ctx.message.content)[8:]
+                message = str(ctx.message.content)[7:]
             await ctx.send(message)
 
 
 async def _say(ctx):
     async with ctx.typing():
-        if len(str(ctx.message.content)) > 6:
+        if len(str(ctx.message.content)) > 5:
             if ctx.message.mention_everyone:
-                message = discord.utils.escape_mentions(str(ctx.message.content)[5:])
+                message = discord.utils.escape_mentions(str(ctx.message.content)[4:])
             else:
-                message = str(ctx.message.content)[5:]
+                message = str(ctx.message.content)[4:]
             await ctx.send(message)
         await ctx.message.delete()
 
