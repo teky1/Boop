@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc
 from gaming.samplegame import _game
+from general_commands.registeration import _registered, _register
 from time import strftime, localtime
 
 
@@ -36,6 +37,15 @@ async def calc(ctx):
 @client.command()
 async def game(ctx):
     await _game(ctx, "Cool Game", client)
+
+@client.command()
+async def registered(ctx):
+    await _registered(ctx)
+
+@client.command()
+async def register(ctx, ign):
+    await _register(ctx, ign)
+
 
 
 with open("bot_key.txt", "r") as file:
