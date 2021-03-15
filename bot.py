@@ -11,6 +11,8 @@ async def boop(ctx, who: discord.User):
 
 print("booooooooooooooooooooooooooooooooooooooooob")
 
+print("thjis isnf bransf change")
+
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
 
