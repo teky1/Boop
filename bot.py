@@ -1,17 +1,18 @@
 import discord
 from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop
+from time import strftime, localtime
+
 
 client = commands.Bot(command_prefix='!')
+
+@client.event
+async def on_ready():
+    print(f"bot started {strftime('%I:%M %p, %m/%d', localtime())}")  # use %c for a full, pre-made date
 
 @client.command()
 async def boop(ctx, who: discord.User):
     await _boop(ctx, who)
-
-
-print("booooooooooooooooooooooooooooooooooooooooob")
-
-print("thjis isnf bransf change")
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
