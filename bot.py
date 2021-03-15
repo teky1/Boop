@@ -9,7 +9,8 @@ async def boop(ctx, who: discord.User):
     await _boop(ctx, who)
 
 
-print("boot")
+
+print("mm")
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
