@@ -3,15 +3,17 @@ from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote
 from gaming.samplegame import _game
 from gaming.rps import _rps, _duelstats
+from gaming.tictactoe import _tictactoe
 from general_commands.registeration import _registered, _register
 from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
 from objects.rpslist_obj import Rpsgames
+from objects.tttgames_obj import TTTGames
 from events.reaction_event import check
 from events.startup import begin
 client = commands.Bot(command_prefix='!')
 
 rpsgames = Rpsgames()
-
+tttgames = TTTGames()
 
 @client.event
 async def on_ready():
@@ -19,7 +21,7 @@ async def on_ready():
 
 @client.event
 async def on_raw_reaction_add(payload):
-    await check(payload, rpsgames)
+    await check(payload, rpsgames, tttgames)
 
 
 @client.command()
@@ -40,11 +42,6 @@ async def say(ctx):
 @client.command()
 async def calc(ctx):
     await _calc(ctx)
-
-
-@client.command()
-async def game(ctx):
-    await _game(ctx, "Cool Game", client)
 
 
 @client.command()
@@ -85,6 +82,9 @@ async def rps(ctx):
 async def rpsstats(ctx):
     await _duelstats(ctx, client)
 
+@client.command(aliases=["ttt"])
+async def tictactoe(ctx):
+    await _tictactoe(ctx, client, tttgames)
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
