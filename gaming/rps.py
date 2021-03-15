@@ -2,7 +2,7 @@ from gaming.gamestart import duelstart
 import json
 
 
-async def _rps(ctx, client):
+async def _rps(ctx, client, games):
     result = await duelstart(ctx, "Rock Paper Scissors", client)
     if result == 0:
         return
@@ -12,7 +12,7 @@ async def _rps(ctx, client):
     challenger_message = await challenger.send(f"{challenger} vs {challenged} \n you have 10 seconds to respond")
     challenged_message = await challenged.send(f"{challenger} vs {challenged} \n you have 10 seconds to respond")
     game_messages = [[ctx, challenger, challenged, "rps"], challenger_message, challenged_message]
-    # games.append(game_messages)
+    games.games.append(game_messages)
     emojis = ["🗿", "📝", "✂"]
     for message in game_messages[1:]:
         for emoji in emojis:

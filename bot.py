@@ -6,10 +6,10 @@ from gaming.rps import _rps, rpsgame, _duelstats
 from general_commands.registeration import _registered, _register
 from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
 from time import strftime, localtime
-
+from objects.rpslist_obj import Rpsgames
 client = commands.Bot(command_prefix='!')
 
-games = []
+games = Rpsgames()
 
 
 @client.event
@@ -20,7 +20,7 @@ async def on_ready():
 @client.event
 async def on_raw_reaction_add(payload):
     if not payload.user_id == 811435588942692352:
-        for game in games:
+        for game in games.games:
             await rpsgame(payload, game)
 
 
@@ -76,8 +76,7 @@ async def bwleaderboard(ctx, equation):
 
 @client.command()
 async def rps(ctx):
-    thisgame = await _rps(ctx, client)
-    games.append(thisgame)
+    await _rps(ctx, client, games)
 
 
 @client.command()
