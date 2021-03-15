@@ -3,6 +3,7 @@ from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc
 from gaming.samplegame import _game
 from general_commands.registeration import _registered, _register
+from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
 from time import strftime, localtime
 
 
@@ -46,7 +47,17 @@ async def registered(ctx):
 async def register(ctx, ign):
     await _register(ctx, ign)
 
+@client.command()
+async def bwterms(ctx):
+    await _bwterms(ctx)
 
+@client.command()
+async def bwscore(ctx, ign, equation):
+    await _bwscore(ctx, ign, equation)
+
+@client.command(aliases=["bwlb"])
+async def bwleaderboard(ctx, equation):
+    await _bedwarsleaderboard(ctx, equation)
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
