@@ -22,6 +22,7 @@ async def _register(ctx, ign):
 
     await ctx.send("User registered.")
 
+
 async def _registered(ctx):
     async with ctx.typing():
         msg = "```\n"

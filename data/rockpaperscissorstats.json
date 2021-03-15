@@ -1,0 +1,122 @@
+{
+    "258048636653535234": {
+        "wins": 9,
+        "ties": 11,
+        "losses": 6,
+        "rock": 3,
+        "paper": 7,
+        "scissors": 2
+    },
+    "475429436137668630": {
+        "wins": 16,
+        "ties": 20,
+        "losses": 16,
+        "rock": 11,
+        "paper": 13,
+        "scissors": 11
+    },
+    "720288689141579776": {
+        "wins": 3,
+        "ties": 6,
+        "losses": 4,
+        "rock": 6,
+        "paper": 0,
+        "scissors": 1
+    },
+    "524331117516554253": {
+        "wins": 3,
+        "ties": 3,
+        "losses": 6,
+        "rock": 0,
+        "paper": 0,
+        "scissors": 1
+    },
+    "401860842775379970": {
+        "wins": 11,
+        "ties": 12,
+        "losses": 5,
+        "rock": 9,
+        "paper": 4,
+        "scissors": 7
+    },
+    "597111214929346565": {
+        "wins": 0,
+        "ties": 1,
+        "losses": 0,
+        "rock": 0,
+        "paper": 0,
+        "scissors": 0
+    },
+    "532333660049899540": {
+        "wins": 6,
+        "ties": 8,
+        "losses": 5,
+        "rock": 4,
+        "paper": 5,
+        "scissors": 9
+    },
+    "508407967716999188": {
+        "wins": 8,
+        "ties": 10,
+        "losses": 11,
+        "rock": 10,
+        "paper": 10,
+        "scissors": 5
+    },
+    "723260991172771891": {
+        "wins": 1,
+        "ties": 3,
+        "losses": 6,
+        "rock": 4,
+        "paper": 3,
+        "scissors": 2
+    },
+    "733057678036828294": {
+        "wins": 1,
+        "ties": 1,
+        "losses": 3,
+        "rock": 0,
+        "paper": 1,
+        "scissors": 1
+    },
+    "662790645320122369": {
+        "wins": 12,
+        "ties": 1,
+        "losses": 4,
+        "rock": 4,
+        "paper": 4,
+        "scissors": 2
+    },
+    "766310295437049877": {
+        "wins": 1,
+        "ties": 0,
+        "losses": 2,
+        "rock": 0,
+        "paper": 0,
+        "scissors": 0
+    },
+    "335958694585958400": {
+        "wins": 1,
+        "ties": 4,
+        "losses": 3,
+        "rock": 4,
+        "paper": 0,
+        "scissors": 4
+    },
+    "647469819758903297": {
+        "wins": 0,
+        "ties": 2,
+        "losses": 0,
+        "rock": 1,
+        "paper": 1,
+        "scissors": 0
+    },
+    "433372040238465064": {
+        "wins": 1,
+        "ties": 0,
+        "losses": 2,
+        "rock": 1,
+        "paper": 1,
+        "scissors": 1
+    }
+}

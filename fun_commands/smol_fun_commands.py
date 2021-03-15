@@ -32,6 +32,7 @@ async def _say(ctx):
             await ctx.send(message)
         await ctx.message.delete()
 
+
 async def _calc(ctx):
     args = ctx.message.content.split()
     if len(args) == 1:
