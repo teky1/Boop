@@ -1,6 +1,8 @@
 from gaming.gamestart import duelstart
 import json
 
+with open("data/bot_id.txt") as idfile:
+    bot_id = int(idfile.read())
 
 async def _rps(ctx, client, games):
     result = await duelstart(ctx, "Rock Paper Scissors", client)
@@ -24,11 +26,11 @@ async def rpsgame(payload, rpsgames):
     rpsemojis = ["🗿", "📝", "✂"]
     emojinames = ["rock", "paper", "scissors"]
     winningcases = ["paperrock", "rockscissors", "scissorspaper"]
-    if not payload.user_id == 811435588942692352:
+    if not payload.user_id == bot_id:
         for game in rpsgames.games:
             for message in game[1:]:
                 if message not in emojinames and payload.message_id == message.id and str(payload.emoji) in rpsemojis \
-                        and payload.user_id != 811435588942692352:
+                        and payload.user_id != bot_id:
                     for thing in range(len(game[1:])):
                         try:
                             if game[thing+1].id == payload.message_id:
