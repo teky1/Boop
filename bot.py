@@ -2,14 +2,15 @@ import discord
 from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc
 from gaming.samplegame import _game
-from gaming.rps import _rps, rpsgame, _duelstats
+from gaming.rps import _rps, _duelstats
 from general_commands.registeration import _registered, _register
 from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
 from time import strftime, localtime
 from objects.rpslist_obj import Rpsgames
+from events.reaction_event import check
 client = commands.Bot(command_prefix='!')
 
-games = Rpsgames()
+rpsgames = Rpsgames()
 
 
 @client.event
@@ -19,9 +20,7 @@ async def on_ready():
 
 @client.event
 async def on_raw_reaction_add(payload):
-    if not payload.user_id == 811435588942692352:
-        for game in games.games:
-            await rpsgame(payload, game)
+    await check(payload, rpsgames)
 
 
 @client.command()
@@ -76,11 +75,11 @@ async def bwleaderboard(ctx, equation):
 
 @client.command()
 async def rps(ctx):
-    await _rps(ctx, client, games)
+    await _rps(ctx, client, rpsgames)
 
 
 @client.command()
-async def duelstats(ctx):
+async def rpsstats(ctx):
     await _duelstats(ctx, client)
 
 
