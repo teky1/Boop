@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc
+from gaming.samplegame import _game
 from time import strftime, localtime
 
 
@@ -16,6 +17,7 @@ async def on_ready():
 async def boop(ctx, who: discord.User):
     await _boop(ctx, who)
 
+
 @client.command()
 async def repeat(ctx):
     await _repeat(ctx)
@@ -25,9 +27,16 @@ async def repeat(ctx):
 async def say(ctx):
     await _say(ctx)
 
+
 @client.command()
 async def calc(ctx):
     await _calc(ctx)
+
+
+@client.command()
+async def game(ctx):
+    await _game(ctx, "Cool Game", client)
+
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()

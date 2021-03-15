@@ -1,21 +1,21 @@
-async def duelstart(ctx, game):
+import asyncio
+
+async def duelstart(ctx, game, client):
     if str(ctx.message.channel)[:len("Direct Message with")] == "Direct Message with":
         await ctx.send("no duels in dms!")
         return 0
     parameters = ctx.message.content.split()
     challenger = ctx.author
     if len(parameters) <= 1:
-        return await duelnoplayer(ctx, challenger, game)
+        return await duelnoplayer(ctx, challenger, game, client)
     try:
-        challenged = await fetchu(ctx.message.raw_mentions[0])
+        challenged = await client.fetch_user(ctx.message.raw_mentions[0])
     except IndexError:
-        return await duelnoplayer(ctx, challenger, game)
+        return await duelnoplayer(ctx, challenger, game, client)
     if challenger == challenged:
         # await ctx.send("You can't duel yourself!")
         # return 0
         pass
-    if challenged.id == 811435588942692352 and game[0] == "C":
-        return [challenger, challenged]
     message = await ctx.send(f"<@!{challenger.id}> has challenged <@!{challenged.id}> "
                              f"to a duel of **{game}**!  \n They have 30 seconds to confirm!")
     challenge_emojis = ["✅", "🚫"]
@@ -41,7 +41,7 @@ async def duelstart(ctx, game):
     return [challenger, challenged]
 
 
-async def duelnoplayer(ctx, challenger, game):
+async def duelnoplayer(ctx, challenger, game, client):
     message = await ctx.send(f"<@!{challenger.id}> is looking for a duel in **{game}**! \n"
                              f"There are 30 seconds left for someone to respond!")
     await message.add_reaction("✅")
@@ -54,7 +54,7 @@ async def duelnoplayer(ctx, challenger, game):
 
     try:
         await client.wait_for('raw_reaction_add', timeout=30.0, check=check)
-        accepted = await fetchu(accepted)
+        accepted = await client.fetch_user(accepted)
         #await ctx.send(f"<@!{accepted.id}> accepted the challenge! ✅")
     except asyncio.TimeoutError:
         await ctx.send(f"Uh Oh! Nobody responded in time!")
