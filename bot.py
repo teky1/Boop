@@ -5,9 +5,9 @@ from gaming.samplegame import _game
 from gaming.rps import _rps, _duelstats
 from general_commands.registeration import _registered, _register
 from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
-from time import strftime, localtime
 from objects.rpslist_obj import Rpsgames
 from events.reaction_event import check
+from events.startup import begin
 client = commands.Bot(command_prefix='!')
 
 rpsgames = Rpsgames()
@@ -15,8 +15,7 @@ rpsgames = Rpsgames()
 
 @client.event
 async def on_ready():
-    print(f"bot started {strftime('%I:%M %p, %m/%d', localtime())}")  # use %c for a full, pre-made date
-
+    await begin()
 
 @client.event
 async def on_raw_reaction_add(payload):
