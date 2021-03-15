@@ -7,6 +7,9 @@ reactions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "
 async def _tictactoe(ctx, client, games):
     players = await gamestart.duelstart(ctx, "Tic Tac Toe", client)
 
+    if players == 0:
+        return
+
     board_str = "---------"
     board = TictactoeBoard(board_str)
     random.shuffle(players)
