@@ -8,6 +8,7 @@ from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, 
 from objects.rpslist_obj import Rpsgames
 from events.reaction_event import check
 from events.startup import begin
+from events.message_event import do_message
 client = commands.Bot(command_prefix='!')
 
 rpsgames = Rpsgames()
@@ -16,6 +17,14 @@ rpsgames = Rpsgames()
 @client.event
 async def on_ready():
     await begin()
+
+
+@client.event
+async def on_message(message):
+    await do_message(message)
+    await client.process_commands(message)
+
+
 
 @client.event
 async def on_raw_reaction_add(payload):
