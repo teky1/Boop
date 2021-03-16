@@ -3,7 +3,6 @@ import json
 import random
 import requests
 import utilities.equation_interpreter as interpreter
-from discord.ext import commands
 
 
 async def _boop(ctx, who: discord.User):
