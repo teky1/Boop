@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands, tasks
-from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote
+from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat
 from gaming.samplegame import _game
 from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
@@ -72,6 +72,9 @@ async def bwleaderboard(ctx, equation):
 async def quote(ctx):
     await _quote(ctx)
 
+@client.command()
+async def cat(ctx):
+    await _cat(ctx)
 
 @client.command()
 async def rps(ctx):

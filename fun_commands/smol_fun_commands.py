@@ -1,6 +1,7 @@
 import discord
 import json
 import random
+import requests
 import utilities.equation_interpreter as interpreter
 from discord.ext import commands
 
@@ -71,3 +72,7 @@ async def _quote(ctx):
 
     quote += f"\n\nAll quotes taken from: https://incorrect-quotes-generator.neocities.org/"
     await ctx.send(quote)
+
+async def _cat(ctx):
+    result = requests.get("https://api.thecatapi.com/v1/images/search").json()[0]
+    await ctx.send(result["url"])
