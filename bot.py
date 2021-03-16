@@ -3,18 +3,25 @@ from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc
 from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
+from gaming.connectfour import _connect4
 from general_commands.registeration import _registered, _register
 from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
 from objects.rpslist_obj import Rpsgames
 from objects.tttgames_obj import TTTGames
+from objects.c4games_obj import C4games
 from events.reaction_event import check
 from events.startup import begin
 from events.message_event import do_message
+import json
 
 client = commands.Bot(command_prefix='!')
 
 rpsgames = Rpsgames()
 tttgames = TTTGames()
+c4games = C4games()
+with open("data/c4games.json") as in_file:
+    c4games.games = json.load(in_file)
+
 
 @client.event
 async def on_ready():
@@ -30,7 +37,7 @@ async def on_message(message):
 
 @client.event
 async def on_raw_reaction_add(payload):
-    await check(payload, rpsgames, tttgames)
+    await check(payload, rpsgames, tttgames, c4games, client)
 
 
 @client.command()
@@ -116,6 +123,14 @@ async def hello(ctx):
 @client.command()
 async def namemc(ctx):
     await _namemc(ctx)
+
+
+@client.command(aliases=["C4"])
+async def c4(ctx):
+    if ctx.message.content.split()[0] == "c4":
+        await _connect4(ctx, True, c4games, client)
+    else:
+        await _connect4(ctx, False, c4games, client)
 
 
 with open("bot_key.txt", "r") as file:
