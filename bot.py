@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands, tasks
-from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat
+from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp
 from gaming.samplegame import _game
 from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
@@ -77,13 +77,16 @@ async def bwscore(ctx, ign, equation):
 async def bwleaderboard(ctx, equation):
     await _bedwarsleaderboard(ctx, equation)
 
+
 @client.command()
 async def quote(ctx):
     await _quote(ctx)
 
+
 @client.command()
 async def cat(ctx):
     await _cat(ctx)
+
 
 @client.command()
 async def rps(ctx):
@@ -94,9 +97,21 @@ async def rps(ctx):
 async def rpsstats(ctx):
     await _duelstats(ctx, client)
 
+
 @client.command(aliases=["ttt"])
 async def tictactoe(ctx):
     await _tictactoe(ctx, client, tttgames)
+
+
+@client.command(aliases=["dream"])
+async def simp(ctx):
+    await _simp(ctx)
+
+
+@client.command(aliases=["hi"])
+async def hello(ctx):
+    await _hello(ctx)
+
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()

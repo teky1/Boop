@@ -75,3 +75,20 @@ async def _quote(ctx):
 async def _cat(ctx):
     result = requests.get("https://api.thecatapi.com/v1/images/search").json()[0]
     await ctx.send(result["url"])
+
+
+async def _simp(ctx):
+    async with ctx.typing():
+        dream = str(ctx.message.content)[6:].upper()
+        if len(dream) > 0:
+            await ctx.send(f"{dream}‼️{dream}‼️ Hello 😀👋🏻 do your shoes need shining? 🤔👟✨ \n"
+                           f"{dream}😳‼️{dream} please 🥺☹️🙏 Should you need coffee? 👀☕️ \n"
+                           f"Come back 😫 PLEASE my clout 😤🤑 Dont go away from me 🥺\n{dream} Please 😫😫🤨")
+        else:
+            await ctx.send("!simp needs a subject to simp for")
+
+
+async def _hello(ctx):
+    async with ctx.typing():
+        await ctx.send("heyyy world ;)")
+    return
