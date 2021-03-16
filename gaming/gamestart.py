@@ -3,6 +3,7 @@ import asyncio
 with open("data/bot_id.txt") as idfile:
     bot_id = int(idfile.read())
 
+
 async def duelstart(ctx, game, client):
     if str(ctx.message.channel)[:len("Direct Message with")] == "Direct Message with":
         await ctx.send("no duels in dms!")
@@ -19,6 +20,8 @@ async def duelstart(ctx, game, client):
         # await ctx.send("You can't duel yourself!")
         # return 0
         pass
+    if challenged.id == 811435588942692352 and game[0] == "C":
+        return [challenger, challenged]
     message = await ctx.send(f"<@!{challenger.id}> has challenged <@!{challenged.id}> "
                              f"to a game of **{game}**!  \n They have 30 seconds to confirm!")
     challenge_emojis = ["✅", "🚫"]
