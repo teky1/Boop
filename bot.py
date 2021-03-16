@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands, tasks
-from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp
-from gaming.samplegame import _game
+from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc
 from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
 from general_commands.registeration import _registered, _register
@@ -11,6 +10,7 @@ from objects.tttgames_obj import TTTGames
 from events.reaction_event import check
 from events.startup import begin
 from events.message_event import do_message
+
 client = commands.Bot(command_prefix='!')
 
 rpsgames = Rpsgames()
@@ -111,6 +111,11 @@ async def simp(ctx):
 @client.command(aliases=["hi"])
 async def hello(ctx):
     await _hello(ctx)
+
+
+@client.command()
+async def namemc(ctx):
+    await _namemc(ctx)
 
 
 with open("bot_key.txt", "r") as file:

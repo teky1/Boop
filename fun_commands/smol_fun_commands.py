@@ -92,3 +92,13 @@ async def _hello(ctx):
     async with ctx.typing():
         await ctx.send("heyyy world ;)")
     return
+
+
+async def _namemc(ctx):
+    async with ctx.typing():
+        parameters = ctx.message.content.split()
+        if len(parameters) <= 1:
+            await ctx.send("give ign :)")
+            return
+        await ctx.send(f"https://namemc.com/profile/{parameters[1]}")
+    return
