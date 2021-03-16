@@ -5,6 +5,7 @@ from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
 from general_commands.registeration import _registered, _register
 from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
+from general_commands.online_cmd import _online
 from objects.rpslist_obj import Rpsgames
 from objects.tttgames_obj import TTTGames
 from events.reaction_event import check
@@ -116,6 +117,10 @@ async def hello(ctx):
 @client.command()
 async def namemc(ctx):
     await _namemc(ctx)
+
+@client.command(aliases=["fl"])
+async def online(ctx):
+    await _online(ctx)
 
 
 with open("bot_key.txt", "r") as file:

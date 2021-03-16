@@ -1,6 +1,10 @@
 import requests
 from objects.result_obj import Result
 from threading import Thread
+import utilities.request_utils as requtils
+import time
+import math
+import json
 
 
 with open("hypixel_api_keys.txt") as keys_file:
@@ -9,13 +13,22 @@ with open("hypixel_api_keys.txt") as keys_file:
     if len(keys) > 1:
         other_keys = keys[1:]
 
-def returnName(uuid):
-    ign = requests.get(f"https://api.mojang.com/user/profiles/{uuid}/names").json()[-1]["name"]
-    return ign
+with open("data/hypixel_game_names.json") as file:
+    game_mapper_data = json.load(file)
 
-def returnUUID(name):
+def returnName(uuid, doReturn=True, resultObj=None):
+    ign = requests.get(f"https://api.mojang.com/user/profiles/{uuid}/names").json()[-1]["name"]
+    if doReturn:
+        return ign
+    else:
+        resultObj.result = ign
+
+def returnUUID(name, doReturn=True, resultObj=None):
     player_data = requests.get("https://api.mojang.com/users/profiles/minecraft/" + name).json()
-    return player_data["id"]
+    if doReturn:
+        return player_data["id"]
+    else:
+        resultObj.result = player_data["id"]
 
 # This is used in the !bwlb and !bwscore commands
 def getUUIDBwStats(uuid, doReturn=True, result=None):
@@ -71,3 +84,78 @@ def getAllPlayerBwStats(contents):
 
     x = stats_results.result
     return x
+
+def map_game_id_to_name(session_dict):
+    return session_dict["gameType"]
+
+def getOnlineStatus(uuid, simple=False, doReturn=True, resultObj=None):
+    if simple == False:
+        player_stats_result = Result()
+        url = f"https://api.hypixel.net/player?key={other_keys[0]}&uuid={uuid}"
+        player_stats_thread = Thread(target=requtils.make_request, args=(url, False, player_stats_result))
+        player_stats_thread.start()
+    online_result = Result()
+    url = f"https://api.hypixel.net/status?key={other_keys[0]}&uuid={uuid}"
+    online_thread = Thread(target=requtils.make_request(url, False, online_result))
+    online_thread.start()
+
+    player_stats_thread.join()
+    online_thread.join()
+
+    status_data = online_result.result["session"]
+    player_data = player_stats_result.result["player"]
+
+    if simple:
+        if doReturn:
+            return status_data
+        else:
+            resultObj.result = status_data
+            return
+
+    if not status_data["online"]:
+        if doReturn:
+            return ["Offline",]
+        else:
+            resultObj.result = ["Offline",]
+            return
+
+    game_name = map_game_id_to_name(status_data)
+
+    lastLogin = player_data["lastLogin"]/1000
+    secondsOnline = time.time() - lastLogin
+
+    hours = math.floor(secondsOnline / 3600)
+    mins = math.floor((secondsOnline % 3600) / 60)
+    secs = math.floor(secondsOnline % 60)
+
+    ign = player_data["displayname"]
+
+    if doReturn:
+        return [f"Online", game_name, f"{hours}h {mins}m {secs}s", ign]
+    else:
+        resultObj.result = [f"Online", game_name, f"{hours}h {mins}m {secs}s", ign]
+
+def check(contents):
+
+    qsMin = requtils.make_request(f"https://api.hypixel.net/key?key="+other_keys[0])["record"]["queriesInPastMin"]
+    if qsMin >= 70:
+        return False
+
+    threads = []
+    result_objs = []
+    for i, uuid in enumerate(contents):
+        result_objs.append(Result())
+        threads.append(Thread(target=getOnlineStatus, args=(uuid, False, False, result_objs[i])))
+
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    output_list = []
+
+    for result in result_objs:
+        if result.result[0] == "Online":
+            output_list.append([result.result[3], result.result[1], result.result[2]])
+
+    return output_list
