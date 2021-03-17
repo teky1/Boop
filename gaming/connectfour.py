@@ -40,12 +40,18 @@ async def _connect4(ctx, issmall, c4games, client):
 
     await ctx.send(f"{note}The game has begun! P1: {player1} 🔴, P2: {player2} 🔵")
     rowsleft = rows
-    while rowsleft > 0:
-        tempmessage = await ctx.send(c4game.formatrow(rowsleft))
+    tempmessage = ""
+    if issmall:
+        tempmessage = await ctx.send(c4game.formatrow(0))
         c4game.messages[1].append(tempmessage.id)
-        if 3 >= rowsleft >= 1:
-            c4game.leftovers = rowsleft
-        rowsleft -= 3
+        c4game.leftovers = 3
+    else:
+        while rowsleft > 0:
+            tempmessage = await ctx.send(c4game.formatrow(rowsleft))
+            c4game.messages[1].append(tempmessage.id)
+            if 3 >= rowsleft >= 1:
+                c4game.leftovers = rowsleft
+            rowsleft -= 3
     c4game.messages[2] = tempmessage.id
     c4game.messages[0] = tempmessage.channel.id
     c4game.messages[3] = await ctx.send(f"{player1} goes first!")
@@ -58,7 +64,7 @@ async def _connect4(ctx, issmall, c4games, client):
         await tempmessage.add_reaction(emojis[emoji])
 
     if p1.id == 811435588942692352:
-        c4game.simpleai()
+        c4game.c4ai()
         c4game.new = False
         c4game.array[c4game.y][c4game.x] = 1
         rowid = round((c4game.y - c4game.leftovers) / 3 - .4)
@@ -72,6 +78,11 @@ async def _connect4(ctx, issmall, c4games, client):
             c4game.turn = 1
 
     c4games.games.append(c4game.jsonify())
+    for uhh in range(len(c4games.games)):
+        if len(c4games.games) > 8:
+            del c4games.games[0]
+        else:
+            break
     with open("data/c4games.json", "w") as out_file:
         json.dump(c4games.games, out_file, indent=4)
 
@@ -88,6 +99,10 @@ async def fourconnect(payload, c4, index, c4games, client):
                 k = await fetchm(chid, c4.messages[3], client)
                 if str(payload.emoji) in c4emojis:
                     await k.edit(content=f"{await fetchu(payload.user_id, client)} selected {payload.emoji}. Check to confirm.")
+                    for cleary in range(c4.rows):
+                        for clearx in range(c4.columns):
+                            if c4.array[cleary][clearx] == 3:
+                                c4.array[cleary][clearx] = 0
                     await updatec4(c4, payload, index, 3, c4games, client)
 
                 elif str(payload.emoji) == "✅" and c4.new:
@@ -109,7 +124,7 @@ async def fourconnect(payload, c4, index, c4games, client):
                     if c4.players[c4.turn] == 811435588942692352:
                         # c4.doublefutureai()
                         # botdata = c4.recurseai()  # (self, fops, tarray, startturn, depth=3, passdown=[]
-                        c4.simpleai()
+                        c4.c4ai()
                         # botinfo = f"(bard chose {botdata[0]+1} with confidence {botdata[1]}"
                         c4.new = False
                         c4.array[c4.y][c4.x] = c4.turn+1
@@ -175,7 +190,6 @@ async def updatec4(c4, payload, index, piece, c4games, client):
 
 
 async def alterc4inputs(ctx):
-    note = ""
     splitted = ctx.message.content.split()
     if len(splitted) > 1:
         ignorelol = splitted[1]
@@ -212,21 +226,28 @@ async def alterc4inputs(ctx):
             columns = ignorelol
     except ValueError:
         pass
-
     else:
         ignorelol = ""
+    xnote = ""
+    ynote = ""
     if columns < 4:
         columns = 4
-        note = "4 is the minimum number of rows/columns\n"
+        xnote = "4 is the minimum number of rows/columns\n"
     elif columns > 9:
+        # if ctx.message.content[1:3] == "c4":
+        #     if columns > 21:
+        #         columns = 21
+        #         xnote = "21 is the maximum number of columns for small c4\n"
+        # else:
         columns = 9
-        note = "9 is the maximum number of columns\n"
+        xnote = "9 is the maximum number of columns\n"
     if rows < 4:
         rows = 4
-        note = "4 is the minimum number of rows/columns\n"
-    elif rows > 30:
-        rows = 30
-        note = "30 is the maximum number of rows\n"
+        ynote = "4 is the minimum number of rows/columns\n"
+    elif rows > 20:
+        rows = 20
+        ynote = "20 is the maximum number of rows\n"
+    note = f"{ynote}{xnote}"
     return [rows, columns, note]
 
 
