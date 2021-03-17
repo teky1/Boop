@@ -128,9 +128,12 @@ async def fourconnect(payload, c4, index, c4games, client):
                         # botinfo = f"(bard chose {botdata[0]+1} with confidence {botdata[1]}"
                         c4.new = False
                         c4.array[c4.y][c4.x] = c4.turn+1
-                        rowid = round((c4.y - c4.leftovers) / 3 - .4)
-                        if rowid < 0:
+                        if c4.issmall:
                             rowid = -1
+                        else:
+                            rowid = round((c4.y - c4.leftovers) / 3 - .4)
+                            if rowid < 0:
+                                rowid = -1
                         j = await fetchm(c4.messages[0], c4.messages[1][rowid + 1], client)
                         await j.edit(content=c4.formatrow(c4.leftovers + 3 * (rowid + 1)))
                         if c4.checkforwin():
@@ -167,8 +170,8 @@ async def updatec4(c4, payload, index, piece, c4games, client):
     orowid = round((c4.y - c4.leftovers) / 3 - .4)
     if orowid < 0:
         orowid = -1
-    if c4.array[c4.y][c4.x] == 3:
-        c4.array[c4.y][c4.x] = 0
+    # if c4.array[c4.y][c4.x] == 3:
+    #     c4.array[c4.y][c4.x] = 0
     if piece == 3:
         c4.x = c4emojis.index(str(payload.emoji))
         c4.y = c4.tops[c4.x]
@@ -177,6 +180,9 @@ async def updatec4(c4, payload, index, piece, c4games, client):
         c4.array[c4.y][c4.x] = piece
         rowid = round((c4.y - c4.leftovers) / 3 - .4)
         if rowid < 0:
+            rowid = -1
+        if c4.issmall:
+            orowid = -1
             rowid = -1
         if not orowid == rowid:
             j = await fetchm(chid, c4.messages[1][orowid + 1], client)
