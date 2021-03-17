@@ -168,36 +168,36 @@ class ConnectGame:
                                 else:
                                     boardscores.append(-100)
                             elif strat[y][x] == 0:
-                                boardscores.append(realscore[0] + realscore[1]*1.2 + realscore[2]*1.2 + realscore[3])
+                                boardscores.append(realscore[0] + realscore[1]*1.2 + realscore[2]*1.2 + realscore[3]*0.6)
                             elif strat[y][x] + self.turn == 4:
                                 boardscores.append(100)
                             else:
                                 boardscores.append(200)
-                            print(raylength)
-                            print(distances)
-                            print(realscore)
-                            print(f"({x+1}, {y+1}) is {strat[y][x]}, so {boardscores[-1]}")
+                            # print(raylength)
+                            # print(distances)
+                            # print(realscore)
+                            # print(f"({x+1}, {y+1}) is {strat[y][x]}, so {boardscores[-1]}")
                         elif y == self.tops[x]:
                             if strat[y][x] == 2:
-                                if strat[y+1][x] == turnpiece+2 and strat[y+2][x] == turnpiece+2:
-                                    enemyscores.append(60)
-                                else:
+                                if strat[y+1][x] == turnpiece+2:
                                     enemyscores.append(-120)
+                                else:
+                                    enemyscores.append(60)
                             elif strat[y][x] == 0:
-                                enemyscores.append(realscore[0] + realscore[1]*1.2 + realscore[2]*1.2 + realscore[3])
+                                enemyscores.append(realscore[0] + realscore[1]*1.2 + realscore[2]*1.2 + realscore[3]*0.6)
                             elif strat[y][x] + self.turn == 4:
                                 enemyscores.append(100)
                             else:
                                 enemyscores.append(200)
-                            print(raylength)
-                            print(distances)
-                            print(realscore)
-                            print(f"({x+1}, {y+1}) is {strat[y][x]}, so {enemyscores[-1]}")
+                            # print(raylength)
+                            # print(distances)
+                            # print(realscore)
+                            # print(f"({x+1}, {y+1}) is {strat[y][x]}, so {enemyscores[-1]}")
 
         centerbias = []
         for column in range(round(self.columns/2+.1)):
             centerbias.append(0+0.01*column)
-        print("uhh", centerbias)
+        # print("uhh", centerbias)
         mid = centerbias[-1]
         if self.columns % 2 == 0:
             for column in range(round(self.columns/2)):
@@ -205,17 +205,17 @@ class ConnectGame:
         else:
             for column in range(round(self.columns/2 - 0.1)):
                 centerbias.append(mid - 0.01*(column+1))
-        print(boardscores)
-        print(enemyscores)
-        print(centerbias)
+        # print(boardscores)
+        # print(enemyscores)
+        # print(centerbias)
         for index in range(self.columns):
             boardscores[index] = round((boardscores[index]+centerbias[index])*100 + enemyscores[index]*70)
 
         bestmove = boardscores.index(max(boardscores))
 
-        print(str(strat[::-1]).replace("], [", ",\n")[2:-2])
-        # print(str(strat)[::-1].replace("[ ,]", ",\n").replace(" ,", ", ")[2:-2])
-        print(boardscores)
+        # print(str(strat[::-1]).replace("], [", ",\n")[2:-2])
+        # print(boardscores)
+
         # bestmove = random.randint(0, 6)
         self.x = bestmove
         self.y = self.tops[self.x]
