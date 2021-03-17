@@ -127,7 +127,7 @@ async def namemc(ctx):
 
 @client.command(aliases=["C4"])
 async def c4(ctx):
-    if ctx.message.content.split()[0] == "c4":
+    if ctx.message.content[1:3] == "c4":
         await _connect4(ctx, True, c4games, client)
     else:
         await _connect4(ctx, False, c4games, client)

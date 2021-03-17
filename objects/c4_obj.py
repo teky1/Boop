@@ -19,26 +19,35 @@ class ConnectGame:
         # [[rowchannelid], [rowids], [reactorchannelid reactorid], [infochannelid, infoid]]
 
     def formatrow(self, rowsleft):
-        message = str(self.array)[2:-2]
-        message = message.replace(" ", "").replace(",", "").split("][")
-        #print(message)
-        if rowsleft >= 3:
-            upperrow = rowsleft-1
-            lowerrow = upperrow-2
+        if self.issmall:
+            message2 = str(self.array[::-1])[1:-1]
+            message2 = message2.replace("[", "| ").replace("]", " |\n").replace(" ", "").replace(",", "")
+            themessage = message2.replace("0", "🔳 ").replace("1", "🔴 ").replace("2", "🔵 ").replace("3", "❔ ")
+            themessage = themessage.replace("|", "| ")
         else:
-            upperrow = rowsleft-1
-            lowerrow = 0
-        themessage = " "
-        for bruh in range(upperrow-lowerrow+1):
-            if self.issmall:
-                themessage = "| "+message[lowerrow+bruh]+"|"+themessage
+            message = str(self.array)[2:-2]
+            message = message.replace(" ", "").replace(",", "").split("][")
+            #print(message)
+            if rowsleft >= 3:
+                upperrow = rowsleft-1
+                lowerrow = upperrow-2
             else:
-                themessage = message[lowerrow+bruh]+themessage
-            if not bruh == upperrow-lowerrow:
-                themessage = "\n" + themessage
-        themessage = themessage.replace("0", "🔳 ").replace("1", "🔴 ").replace("2", "🔵 ").replace("3", "❔ ")
+                upperrow = rowsleft-1
+                lowerrow = 0
+            themessage = " "
+            for bruh in range(upperrow-lowerrow+1):
+                if self.issmall:
+                    themessage = "| "+message[lowerrow+bruh]+"|"+themessage
+                else:
+                    themessage = message[lowerrow+bruh]+themessage
+                if not bruh == upperrow-lowerrow:
+                    themessage = "\n" + themessage
+            themessage = themessage.replace("0", "🔳 ").replace("1", "🔴 ").replace("2", "🔵 ").replace("3", "❔ ")
 
         return themessage
+
+    def jsonify(self):
+        return [self.rows, self.columns, self.players, self.x, self.y, self.turn, self.tops, self.leftovers, self.new, self.messages, self.array, self.won, self.issmall]
 
     def checkforwin(self, ai=False, x=0, y=0, turn=0):
         directions = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]]  # -> <- | | / / \ \
@@ -74,85 +83,141 @@ class ConnectGame:
                 pass
             if 3 in distances or 4 in distances or 5 in distances or 6 in distances:
                 if ai:
-                    return [3, 3, 3, 3]
-                return True
+                    return [69]
+                else:
+                    return True
+            # elif 2 in distances:
+            #     if ai:
+            #         return[420]
         if ai:
             return distances
         return False
 
-    def jsonify(self):
-        return [self.rows, self.columns, self.players, self.x, self.y, self.turn, self.tops, self.leftovers, self.new, self.messages, self.array, self.won, self.issmall]
-
-    def boardscorer(self, turn=-1, ftops=None): #make it check the other player's best move, and both player's board's scores after this move
+    def c4ai(self):
+        directions = [[1, 0], [-1, 0], [1, 1], [-1, -1], [1, -1], [-1, 1], [0, -1], [0, 1]]  # -> <- / / \ \ |
+        strat = [[0 for i in range(self.columns)] for j in range(self.rows)]
         boardscores = []
-        for each in range(self.columns):
-            x = each
-            if ftops is None:
-                y = self.tops[x]
-            else:
-                y = ftops[x]
-            if y == self.rows:
-                if ftops is None:
-                    # print("HIGH!")
-                    boardscores.append(-100)
-                else:
-                    boardscores.append(-5)
-            else:
-                if turn >= 0:
-                    returned = self.checkforwin(True, x, y, turn)
-                else:
-                    returned = self.checkforwin(True, x, y)
-                boardscores.append(returned[0] + returned[1] + returned[2]*1.2 + returned[3]*1.2)
-        return boardscores
+        enemyscores = []
+        if self.turn == 0:
+            first = 2
+            second = 1
+        else:
+            first = 1
+            second = 2
+        # count - /  \ |  # 0 = nothing, 1 = tops, 2 = forbidden, 3 = p1 wins, 4 = p2 wins
+        for x in range(self.columns):
+            for y in range(self.rows):
+                y = self.rows-y-1
+                if self.tops[x] == self.rows:  # if topped out
+                    boardscores.append(-250)
+                    enemyscores.append(-250)
+                    break
+                if not self.array[y][x] == 0:
+                    break
+                else:  # check every whitespace for a three in a row, and mark them
+                    for turnpiece in [first, second]:
+                        # print(f"{turnpiece}, ({x+1}, {y+1})")
+                        distances = [0, 0, 0, 0]
+                        raylength = [0, 0, 0, 0]
+                        realscore = [0, 0, 0, 0]
+                        inarow = [0, 0, 0, 0]
 
-    def simpleai(self, forfuture=False, ftops=None, forsum=False):  # greedy algorithm doesnt see future
+                        for direction in directions:
+                            space = False
+                            axis = round(directions.index(direction) / 2 - .1)
+                            try:
+                                for distance in range(3):
+                                    newy = y + (distance + 1) * direction[1]
+                                    newx = x + (distance + 1) * direction[0]
+                                    if not self.columns > newx >= 0 or not self.rows > newy >= 0:
+                                        break
+                                    if self.array[newy][newx] == turnpiece:
+                                        distances[axis] += 1
+                                        raylength[axis] += 1
+                                        if space is False:
+                                            inarow[axis] += 1
+                                            if inarow[axis] >= 3:
+                                                # print(f"{turnpiece}, ({x + 1}, {y + 1})")
+                                                # print(f"WINNING BOARD: {self.array}")
+                                                # print(f"CONSECUTIVE DIRECTION SCORES: {inarow}")
+                                                strat[y][x] = turnpiece + 2
+                                                if y > 0:
+                                                    strat[y-1][x] = 2
+                                                space = True
 
-        board0 = self.boardscorer(0, ftops)
-        board1 = self.boardscorer(1, ftops)
+                                    elif self.array[newy][newx] == 0:
+                                        raylength[axis] += 1
+                                        space = True
+
+                                    else:
+                                        break  # opponent piece or glitch 3
+
+                            except IndexError:
+                                pass
+
+                            if raylength[axis] >= 3:
+                                realscore[axis] = 1.5*distances[axis]+0.5  # add biases later
+                            elif raylength[axis] == 2:
+                                realscore[axis] = 0.5*distances[axis]
+                            elif raylength[axis] == 1:
+                                realscore[axis] = 0.2*distances[axis]
+                        if turnpiece == self.turn+1 and y == self.tops[x]:  # turnpiece == self.turn+1 and
+                            if strat[y][x] == 2:
+                                if strat[y+1][x] == turnpiece+2 and strat[y+2][x] == turnpiece+2:
+                                    boardscores.append(60)
+                                else:
+                                    boardscores.append(-100)
+                            elif strat[y][x] == 0:
+                                boardscores.append(realscore[0] + realscore[1]*1.2 + realscore[2]*1.2 + realscore[3])
+                            elif strat[y][x] + self.turn == 4:
+                                boardscores.append(100)
+                            else:
+                                boardscores.append(200)
+                            print(raylength)
+                            print(distances)
+                            print(realscore)
+                            print(f"({x+1}, {y+1}) is {strat[y][x]}, so {boardscores[-1]}")
+                        elif y == self.tops[x]:
+                            if strat[y][x] == 2:
+                                if strat[y+1][x] == turnpiece+2 and strat[y+2][x] == turnpiece+2:
+                                    enemyscores.append(60)
+                                else:
+                                    enemyscores.append(-120)
+                            elif strat[y][x] == 0:
+                                enemyscores.append(realscore[0] + realscore[1]*1.2 + realscore[2]*1.2 + realscore[3])
+                            elif strat[y][x] + self.turn == 4:
+                                enemyscores.append(100)
+                            else:
+                                enemyscores.append(200)
+                            print(raylength)
+                            print(distances)
+                            print(realscore)
+                            print(f"({x+1}, {y+1}) is {strat[y][x]}, so {enemyscores[-1]}")
+
         centerbias = []
-        sum = []
-
-        for column in range(round(self.columns/2)):
-            centerbias.append(round(0+0.1*column, 1))
+        for column in range(round(self.columns/2+.1)):
+            centerbias.append(0+0.01*column)
+        print("uhh", centerbias)
         mid = centerbias[-1]
         if self.columns % 2 == 0:
             for column in range(round(self.columns/2)):
-                centerbias.append(round(mid - 0.1*column, 1))
+                centerbias.append(mid - 0.01*column)
         else:
             for column in range(round(self.columns/2 - 0.1)):
-                centerbias.append(round(mid - 0.1*(column+1), 1))
+                centerbias.append(mid - 0.01*(column+1))
+        print(boardscores)
+        print(enemyscores)
+        print(centerbias)
+        for index in range(self.columns):
+            boardscores[index] = round((boardscores[index]+centerbias[index])*100 + enemyscores[index]*70)
 
-        for column in range(self.columns):
-            if self.turn == 0:
-                sum.append(board0[column] + board1[column]*0.5)
-            if self.turn == 1:
-                sum.append(board0[column]*0.5 + board1[column])
-            sum[column] += centerbias[column]
+        bestmove = boardscores.index(max(boardscores))
 
-        # print(f"p1: {board0}\np2: {board1}\nsum:{sum}")
-
-        if forfuture:
-            board0sum = 0
-            board1sum = 0
-            for item in board0:
-                board0sum += item
-            for item in board1:
-                board1sum += item
-            return [board0sum, board1sum]
-        elif forsum:
-            return sum
-        else:
-            bestscore = 0
-            bestmoves = []
-            for column in sum:
-                if column > bestscore:
-                    bestmoves = [sum.index(column)]
-                    bestscore = column
-                elif column == bestscore:
-                    bestmoves.append(sum.index(column))
-            bestmove = bestmoves[random.randint(0, len(bestmoves) - 1)]
-            self.x = bestmove
-            self.y = self.tops[self.x]
-            self.tops[self.x] += 1
-            self.array[self.y][self.x] = self.turn + 1
-            return bestmove
+        print(str(strat[::-1]).replace("], [", ",\n")[2:-2])
+        # print(str(strat)[::-1].replace("[ ,]", ",\n").replace(" ,", ", ")[2:-2])
+        print(boardscores)
+        # bestmove = random.randint(0, 6)
+        self.x = bestmove
+        self.y = self.tops[self.x]
+        self.tops[self.x] += 1
+        self.array[self.y][self.x] = self.turn + 1
