@@ -86,6 +86,28 @@ def getAllPlayerBwStats(contents):
     return x
 
 def map_game_id_to_name(session_dict):
+    single_types = ["LIMBO", "MAIN", "REPLAY", "TOURNAMENT", "HOUSING", "WALLS3", "SURVIVAL_GAMES", "MCGO",
+                    "BATTLEGROUND", "SPEED_UHC", "SUPER_SMASH", "PIT", ]
+
+    ignore_name = ["LEGACY", "ARCADE"]
+
+    if session_dict["gameType"] in single_types:
+        for x in game_mapper_data:
+            if x["key"] == session_dict["gameType"]:
+                return x["name"]
+    elif session_dict["gameType"] in ignore_name:
+        if session_dict["mode"] == "LOBBY":
+            for x in game_mapper_data:
+                if x["key"] == session_dict["gameType"]:
+                    return x["name"]+" Lobby"
+        else:
+            for x in game_mapper_data:
+                if x["key"] == session_dict["gameType"]:
+                    for y in x["modes"]:
+                        if y["key"] == session_dict["mode"]:
+                            return y["name"]
+
+
     return session_dict["gameType"]
 
 def getOnlineStatus(uuid, simple=False, doReturn=True, resultObj=None):
