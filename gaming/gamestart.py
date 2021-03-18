@@ -20,7 +20,7 @@ async def duelstart(ctx, game, client):
         # await ctx.send("You can't duel yourself!")
         # return 0
         pass
-    if challenged.id == 811435588942692352 and game[0] == "C":
+    if challenged.id == bot_id and game[0] == "C":
         return [challenger, challenged]
     message = await ctx.send(f"<@!{challenger.id}> has challenged <@!{challenged.id}> "
                              f"to a game of **{game}**!  \n They have 30 seconds to confirm!")

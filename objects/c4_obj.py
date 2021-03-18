@@ -156,11 +156,11 @@ class ConnectGame:
                                 pass
 
                             if raylength[axis] >= 3:
-                                realscore[axis] = 1.5*distances[axis]+0.5  # add biases later
+                                realscore[axis] = 1.5*distances[axis]**2+0.5  # add biases later
                             elif raylength[axis] == 2:
-                                realscore[axis] = 0.5*distances[axis]
+                                realscore[axis] = 0.5*distances[axis]**2
                             elif raylength[axis] == 1:
-                                realscore[axis] = 0.2*distances[axis]
+                                realscore[axis] = 0.2*distances[axis]**2
                         if turnpiece == self.turn+1 and y == self.tops[x]:  # turnpiece == self.turn+1 and
                             if strat[y][x] == 2:
                                 if strat[y+1][x] == turnpiece+2 and strat[y+2][x] == turnpiece+2:
