@@ -3,6 +3,9 @@ from objects.c4_obj import ConnectGame
 from gaming.gamestart import duelstart
 import json
 
+with open("data/bot_id.txt") as idfile:
+    bot_id = int(idfile.read())
+
 usercache = {}  # TEKY IM SORRY I NEEDED FETCHM AND FETCHU I DONT WANNA GO BACK TO BEING SLOW
 messagecache = {}
 
@@ -26,12 +29,17 @@ async def _connect4(ctx, issmall, c4games, client):
     result = await duelstart(ctx, f"Connect 4 ({columns}x{rows})", client)
     if result == 0:
         return
-    if random.randint(0, 1) == 0:
-        p1 = result[0]
-        p2 = result[1]
-    else:
-        p1 = result[1]
-        p2 = result[0]
+    # if random.randint(0, 1) == 0:
+    #     p1 = result[0]
+    #     p2 = result[1]
+    # else:
+    #     p1 = result[1]
+    #     p2 = result[0]
+
+    p3 = c4games.newstart()
+    p1 = result[p3[0]]
+    p2 = result[p3[1]]
+
     player1 = str(p1)[:-5]
     player2 = str(p2)[:-5]
 
@@ -63,7 +71,7 @@ async def _connect4(ctx, issmall, c4games, client):
     for emoji in range(columns+1):
         await tempmessage.add_reaction(emojis[emoji])
 
-    if p1.id == 811435588942692352:
+    if p1.id == bot_id:
         c4game.c4ai()
         c4game.new = False
         c4game.array[c4game.y][c4game.x] = 1
@@ -79,7 +87,7 @@ async def _connect4(ctx, issmall, c4games, client):
 
     c4games.games.append(c4game.jsonify())
     for uhh in range(len(c4games.games)):
-        if len(c4games.games) > 8:
+        if len(c4games.games) > 20:
             del c4games.games[0]
         else:
             break
@@ -121,7 +129,7 @@ async def fourconnect(payload, c4, index, c4games, client):
                     else:
                         c4.turn = 1
                     botinfo = ""
-                    if c4.players[c4.turn] == 811435588942692352:
+                    if c4.players[c4.turn] == bot_id:
                         # c4.doublefutureai()
                         # botdata = c4.recurseai()  # (self, fops, tarray, startturn, depth=3, passdown=[]
                         c4.c4ai()
@@ -137,7 +145,7 @@ async def fourconnect(payload, c4, index, c4games, client):
                         j = await fetchm(c4.messages[0], c4.messages[1][rowid + 1], client)
                         await j.edit(content=c4.formatrow(c4.leftovers + 3 * (rowid + 1)))
                         if c4.checkforwin():
-                            await k.edit(content=f"GAME OVER. {str(await fetchu(811435588942692352, client))} won!!!")
+                            await k.edit(content=f"GAME OVER. {str(await fetchu(bot_id, client))} won!!!")
                             del c4games.games[index]
                             with open("data/c4games.json", "w") as out_file:
                                 json.dump(c4games.games, out_file, indent=4)
@@ -152,7 +160,7 @@ async def fourconnect(payload, c4, index, c4games, client):
                     c4games.games[index] = c4.jsonify()
                     with open("data/c4games.json", "w") as out_file:
                         json.dump(c4games.games, out_file, indent=4)
-            if not payload.user_id == 811435588942692352:
+            if not payload.user_id == bot_id:
                 h = await fetchm(chid, c4.messages[2], client)
                 await h.remove_reaction(payload.emoji, await fetchu(payload.user_id, client))
         else:
