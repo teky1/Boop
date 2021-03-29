@@ -7,6 +7,7 @@ from gaming.connectfour import _connect4
 from general_commands.registeration import _registered, _register
 from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
 from general_commands.online_cmd import _online
+from general_commands.birthdays import _birthdays, _birth, _nextbirth
 from objects.rpslist_obj import Rpsgames
 from objects.tttgames_obj import TTTGames
 from objects.c4games_obj import C4games
@@ -136,6 +137,21 @@ async def c4(ctx):
         await _connect4(ctx, True, c4games, client)
     else:
         await _connect4(ctx, False, c4games, client)
+
+
+@client.command()
+async def birthdays(ctx):
+    await _birthdays(ctx, client)
+
+
+@client.command()
+async def birth(ctx):
+    await _birth(ctx, client)
+
+
+@client.command()
+async def nextbirth(ctx):
+    await _nextbirth(ctx, client)
 
 
 with open("bot_key.txt", "r") as file:

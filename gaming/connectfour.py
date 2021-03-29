@@ -107,14 +107,12 @@ async def fourconnect(payload, c4, index, c4games, client):
                 k = await fetchm(chid, c4.messages[3], client)
                 if str(payload.emoji) in c4emojis:
                     await k.edit(content=f"{await fetchu(payload.user_id, client)} selected {payload.emoji}. Check to confirm.")
-                    for cleary in range(c4.rows):
-                        for clearx in range(c4.columns):
-                            if c4.array[cleary][clearx] == 3:
-                                c4.array[cleary][clearx] = 0
+                    c4.nothr33zz()
                     await updatec4(c4, payload, index, 3, c4games, client)
 
                 elif str(payload.emoji) == "✅" and c4.new:
                     c4.tops[c4.x] = c4.y+1
+                    c4.nothr33zz()
                     await updatec4(c4, payload, index, 1+c4.turn, c4games, client)
                     c4.new = False
                     if c4.checkforwin():
