@@ -49,6 +49,12 @@ class ConnectGame:
     def jsonify(self):
         return [self.rows, self.columns, self.players, self.x, self.y, self.turn, self.tops, self.leftovers, self.new, self.messages, self.array, self.won, self.issmall]
 
+    def nothr33zz(self):
+        for cleary in range(self.rows):
+            for clearx in range(self.columns):
+                if self.array[cleary][clearx] == 3:
+                    self.array[cleary][clearx] = 0
+
     def checkforwin(self, ai=False, x=0, y=0, turn=0):
         directions = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]]  # -> <- | | / / \ \
         distances = [0, 0, 0, 0]  # - | / \
@@ -205,11 +211,18 @@ class ConnectGame:
         else:
             for column in range(round(self.columns/2 - 0.1)):
                 centerbias.append(mid - 0.01*(column+1))
-        # print(boardscores)
-        # print(enemyscores)
-        # print(centerbias)
+
         for index in range(self.columns):
-            boardscores[index] = round((boardscores[index]+centerbias[index])*100 + enemyscores[index]*70)
+            try:
+                yourscore = boardscores[index]*100
+                centerscore = centerbias[index]*100
+                enemyscore = enemyscores[index]*70
+                boardscores[index] = round(yourscore + centerscore + enemyscore)
+            except IndexError:
+                print(boardscores)
+                print(enemyscores)
+                print(centerbias)
+            # boardscores[index] = round((boardscores[index]+centerbias[index])*100 + enemyscores[index]*70)
 
         bestmove = boardscores.index(max(boardscores))
 

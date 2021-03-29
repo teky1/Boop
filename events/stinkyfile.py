@@ -16,7 +16,6 @@ async def stink(message):
             else:
                 await message.channel.send("so hot")
 
-    if random.randint(0, 1):
         if stinky == "you" or stinky == "u":
             if random.randint(0, 2):
                 await message.channel.send("are stinky.")
