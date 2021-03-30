@@ -8,6 +8,7 @@ from general_commands.registeration import _registered, _register
 from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
 from general_commands.online_cmd import _online
 from general_commands.birthdays import _birthdays, _birth, _nextbirth
+from general_commands.smp_cmds import _smp
 from objects.rpslist_obj import Rpsgames
 from objects.tttgames_obj import TTTGames
 from objects.c4games_obj import C4games
@@ -152,6 +153,10 @@ async def birth(ctx):
 @client.command()
 async def nextbirth(ctx):
     await _nextbirth(ctx, client)
+
+@client.command()
+async def smp(ctx):
+    await _smp(ctx)
 
 
 with open("bot_key.txt", "r") as file:
