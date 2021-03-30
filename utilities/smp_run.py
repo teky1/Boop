@@ -9,6 +9,7 @@ server_ip = None
 
 def startServer(bat_path=run_bat_path, result=None):
     global server_running
+    global server_ip
     if server_running:
         return False
     server_running = True
