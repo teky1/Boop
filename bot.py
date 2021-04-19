@@ -154,9 +154,9 @@ async def birth(ctx):
 async def nextbirth(ctx):
     await _nextbirth(ctx, client)
 
-@client.command()
-async def smp(ctx):
-    await _smp(ctx)
+# @client.command()
+# async def smp(ctx):
+#    await _smp(ctx)
 
 
 with open("bot_key.txt", "r") as file:

@@ -17,12 +17,12 @@ async def _smp(ctx):
          return
     if len(args) == 1:
         if server.server_running:
-            await ctx.send(f"The SMP is running on the IP: {server.server_ip}")
+            await ctx.send(f"The SMP is running on the IP: {server.server_ip.replace('tcp://', '')}")
         else:
             await ctx.send(f"The SMP is not currently running, do `!smp start` to start it.")
     else:
         if server.server_running:
-            await ctx.send(f"The SMP is already running on the IP: {server.server_ip}")
+            await ctx.send(f"The SMP is already running on the IP: {server.server_ip.replace('tcp://', '')}")
         else:
             result = Result()
             result.result = None
@@ -31,4 +31,4 @@ async def _smp(ctx):
             await ctx.send("Starting server... (please wait like 30 seconds)")
             while result.result == None:
                 await asyncio.sleep(1)
-            await ctx.send(f"IP: {result.result.replace('tcp://', '')}\n Note: The server could take up to 5 minutes to start so give it a minute. If the server doesn't start after 5 minutes dm Teky")
+            await ctx.send(f"IP: {result.result.replace('tcp://', '')}\n\nNote: The server could take up to 5 minutes to start so give it a minute. If the server doesn't start after 5 minutes dm Teky")
