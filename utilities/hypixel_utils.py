@@ -91,8 +91,8 @@ def map_game_id_to_name(session_dict):
 
     classic_games = []
 
-    ignore_name = ["LEGACY", "ARCADE", "PROTOTYPE"]
-    dont_ignore_name = ["SKYBLOCK","DUELS"]
+    ignore_name = ["LEGACY", "ARCADE", "PROTOTYPE", "DUELS"]
+    dont_ignore_name = ["SKYBLOCK"]
 
     if session_dict["gameType"] in single_types:
         for x in game_mapper_data:
@@ -118,7 +118,7 @@ def map_game_id_to_name(session_dict):
             for x in game_mapper_data:
                 if x["key"] == session_dict["gameType"]:
                     for y in x["modes"]:
-                        if y["key"].replace("DUELS_", "") == session_dict["mode"]:
+                        if y["key"] == session_dict["mode"]:
                             return f"{x['name']} {y['name']}".replace("SkyBlock", "SB")
 
 
