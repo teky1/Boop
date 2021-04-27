@@ -1,12 +1,10 @@
 import random
-
-
+import math
 async def stink(message):
     stinky = message.content.replace("'", "").replace("-", "").replace(".", "").upper()
 
-    if "┻━┻" in message.content:
-        await message.channel.send("┬─┬ ノ( ゜-゜ノ) "*message.content.count('┻━┻'))
-    elif message.author.id == 524331117516554253 and stinky not in ["you", "u", "youre", "your", "ur"]:
+
+    if message.author.id == 524331117516554253 and stinky not in ["you", "u", "youre", "your", "ur"]:
         if stinky == "I":
             await message.channel.send("am gavin so i am the stinkiest person ever")
         elif stinky == "IM" or stinky == "I AM":
@@ -49,3 +47,10 @@ async def stink(message):
 
     elif random.randint(1, 1000) == 420:
         await message.channel.send("^")
+
+    legTypes = "┻⊥丄⏊┴ㅗ上⅃"
+    totalLegs = 0
+    for x in legTypes:
+        totalLegs += message.content.count(x)
+    if totalLegs > 0:
+        await message.channel.send("┬─┬ ノ( ゜-゜ノ) "*math.ceil(totalLegs/2))
