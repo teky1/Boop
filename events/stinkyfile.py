@@ -54,3 +54,5 @@ async def stink(message):
         totalLegs += message.content.count(x)
     if totalLegs > 0:
         await message.channel.send("┬─┬ ノ( ゜-゜ノ) "*math.ceil(totalLegs/2))
+    if message.author.id == 836946432186384404 and message.content == "go to class olds :D":
+        await message.channel.send("shut up carl")
