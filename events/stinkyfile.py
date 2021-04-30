@@ -48,6 +48,9 @@ async def stink(message):
     elif random.randint(1, 1000) == 420:
         await message.channel.send("^")
 
+    if message.content == "but":
+        await message.channel.send("t")
+
     legTypes = "┻⊥丄⏊┴ㅗ上⅃"
     totalLegs = 0
     for x in legTypes:
