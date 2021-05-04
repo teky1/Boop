@@ -4,13 +4,17 @@ import random
 import requests
 import utilities.equation_interpreter as interpreter
 
+with open("data/boop_gifs.txt") as file:
+    boop_gifs = file.read().split()
 
 async def _boop(ctx, who: discord.User):
     if who is None:
         await ctx.send("Who u boopin???")
         return
-
-    await ctx.send(who.mention+" ***YOU*** have been booped!!!!!!")
+    embed = discord.Embed(description=who.mention+" ***YOU*** have been booped!!!!!!")
+    print(boop_gifs)
+    embed.set_image(url=random.choice(boop_gifs))
+    await ctx.send(embed=embed)
 
 
 
