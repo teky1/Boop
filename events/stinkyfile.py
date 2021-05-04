@@ -1,5 +1,7 @@
 import random
 import math
+import re
+
 async def stink(message):
     stinky = message.content.replace("'", "").replace("-", "").replace(".", "").upper()
 
@@ -19,6 +21,11 @@ async def stink(message):
             await message.channel.send("am big man sugar daddy. u can call me ~~hiley~~ hailey tho")
         elif stinky == "IM" or stinky == "I AM":
             await message.channel.send("big man sugar daddy. u can call me ~~hiley~~ hailey tho")
+    elif message.author.id == 471313677618774031 and stinky not in ["you", "u", "youre", "your", "ur"]:
+        if stinky == "I":
+            await message.channel.send("am #LUREEN2021")
+        elif stinky == "IM" or stinky == "I AM":
+            await message.channel.send("#LUREEN2021")
     elif random.randint(0, 1):
         if stinky == "I":
             if random.randint(0, 2):
@@ -50,6 +57,9 @@ async def stink(message):
 
     if message.content == "but":
         await message.channel.send("t")
+
+    if re.match('\Ayo+u+$|\Au+$', message.content.lower()) is not None:
+        await message.channel.send("soulja boy tell ya")
 
     legTypes = "┻⊥丄⏊┴ㅗ上⅃"
     totalLegs = 0

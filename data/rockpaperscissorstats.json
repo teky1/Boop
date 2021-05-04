@@ -8,18 +8,18 @@
         "scissors": 3
     },
     "475429436137668630": {
-        "wins": 20,
-        "ties": 24,
-        "losses": 16,
-        "rock": 12,
+        "wins": 22,
+        "ties": 25,
+        "losses": 17,
+        "rock": 13,
         "paper": 17,
-        "scissors": 14
+        "scissors": 17
     },
     "720288689141579776": {
-        "wins": 3,
+        "wins": 4,
         "ties": 6,
         "losses": 5,
-        "rock": 7,
+        "rock": 8,
         "paper": 0,
         "scissors": 1
     },
@@ -80,12 +80,12 @@
         "scissors": 1
     },
     "662790645320122369": {
-        "wins": 12,
-        "ties": 1,
-        "losses": 4,
-        "rock": 4,
-        "paper": 4,
-        "scissors": 2
+        "wins": 13,
+        "ties": 2,
+        "losses": 6,
+        "rock": 5,
+        "paper": 5,
+        "scissors": 4
     },
     "766310295437049877": {
         "wins": 1,
@@ -96,11 +96,11 @@
         "scissors": 0
     },
     "335958694585958400": {
-        "wins": 1,
+        "wins": 2,
         "ties": 4,
         "losses": 3,
         "rock": 4,
-        "paper": 0,
+        "paper": 1,
         "scissors": 4
     },
     "647469819758903297": {
@@ -117,6 +117,14 @@
         "losses": 2,
         "rock": 1,
         "paper": 1,
+        "scissors": 1
+    },
+    "471313677618774031": {
+        "wins": 0,
+        "ties": 0,
+        "losses": 2,
+        "rock": 1,
+        "paper": 0,
         "scissors": 1
     }
 }
