@@ -123,7 +123,7 @@ async def hello(ctx):
     await _hello(ctx)
 
 
-@client.command()
+@client.command(aliases=["ign"])
 async def namemc(ctx):
     await _namemc(ctx)
 
