@@ -37,14 +37,23 @@ def getUUIDBwStats(uuid, doReturn=True, result=None):
     ign = returnName(uuid)
     op = {
         "level": data["achievements"]["bedwars_level"],
+        "star": data["achievements"]["bedwars_level"],
         "wins": bw_data["wins_bedwars"],
+        "w": bw_data["wins_bedwars"],
         "losses": bw_data["losses_bedwars"],
+        "l": bw_data["losses_bedwars"],
         "final_kills": bw_data["final_kills_bedwars"],
+        "fk": bw_data["final_kills_bedwars"],
         "final_deaths": bw_data["final_deaths_bedwars"],
+        "fd": bw_data["final_deaths_bedwars"],
         "kills": bw_data["kills_bedwars"],
+        "k": bw_data["kills_bedwars"],
         "deaths": bw_data["deaths_bedwars"],
+        "d": bw_data["deaths_bedwars"],
         "beds_broken": bw_data["beds_broken_bedwars"],
-        "beds_lost": bw_data["beds_lost_bedwars"]
+        "bb": bw_data["beds_broken_bedwars"],
+        "beds_lost": bw_data["beds_lost_bedwars"],
+        "bl": bw_data["beds_lost_bedwars"]
     }
     if doReturn:
         return op
@@ -57,14 +66,23 @@ def getIGNBwStats(ign):
     bw_data = data["stats"]["Bedwars"]
     op = {
         "level": data["achievements"]["bedwars_level"],
+        "star": data["achievements"]["bedwars_level"],
         "wins": bw_data["wins_bedwars"],
+        "w": bw_data["wins_bedwars"],
         "losses": bw_data["losses_bedwars"],
+        "l": bw_data["losses_bedwars"],
         "final_kills": bw_data["final_kills_bedwars"],
+        "fk": bw_data["final_kills_bedwars"],
         "final_deaths": bw_data["final_deaths_bedwars"],
+        "fd": bw_data["final_deaths_bedwars"],
         "kills": bw_data["kills_bedwars"],
+        "k": bw_data["kills_bedwars"],
         "deaths": bw_data["deaths_bedwars"],
+        "d": bw_data["deaths_bedwars"],
         "beds_broken": bw_data["beds_broken_bedwars"],
-        "beds_lost": bw_data["beds_lost_bedwars"]
+        "bb": bw_data["beds_broken_bedwars"],
+        "beds_lost": bw_data["beds_lost_bedwars"],
+        "bl": bw_data["beds_lost_bedwars"]
     }
     return op
 
