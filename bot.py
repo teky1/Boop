@@ -1,11 +1,12 @@
 import discord
+import typing
 from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc
 from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
 from gaming.connectfour import _connect4
 from general_commands.registeration import _registered, _register
-from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore
+from general_commands.bedwars_leaderboard import _bwterms, _bedwarsleaderboard, _bwscore, _graphleaderboard
 from general_commands.online_cmd import _online
 from general_commands.birthdays import _birthdays, _birth, _nextbirth
 from general_commands.weather_cmd import _weather
@@ -88,6 +89,9 @@ async def bwscore(ctx, ign, equation):
 async def bwleaderboard(ctx, equation):
     await _bedwarsleaderboard(ctx, equation)
 
+@client.command(aliases=["gbwlb", "graph"])
+async def graphleaderboard(ctx, equation, page: typing.Optional[int] = 1):
+    await _graphleaderboard(ctx, equation, page)
 
 @client.command()
 async def quote(ctx):
