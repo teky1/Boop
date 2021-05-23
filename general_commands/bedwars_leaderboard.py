@@ -60,7 +60,7 @@ async def _graphleaderboard(ctx, equation, page):
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.barh(names, scores, color="lavender")
-        plt.title(equation, color="white")
+        plt.title(f'{equation} (Page {page})', color="white")
         plt.tight_layout()
 
         ax.spines['bottom'].set_color('white')
