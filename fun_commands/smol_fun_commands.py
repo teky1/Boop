@@ -2,7 +2,9 @@ import discord
 import json
 import random
 import requests
+import string
 import utilities.equation_interpreter as interpreter
+import utilities.webhook_utils as webhooks
 
 with open("data/boop_gifs.txt") as file:
     boop_gifs = file.read().split()
@@ -96,7 +98,34 @@ async def _hello(ctx):
     async with ctx.typing():
         await ctx.send("heyyy world ;)")
     return
+async def _upsidedown(ctx):
+    message = " ".join(ctx.message.content.split()[1:])
+    flipped_chars = "Z⅄XMΛ∩⊥SᴚΌԀONW˥⋊ſIH⅁ℲƎ◖Ɔ𐐒∀zʎxʍʌnʇsɹbdouɯןʞɾıɥƃɟǝpɔqɐ"[::-1]
+    reversed_msg = list(message[::-1])
+    for i,char in enumerate(reversed_msg):
+        if char in string.ascii_letters:
+            reversed_msg[i] = flipped_chars[string.ascii_letters.index(char)]
+    await webhooks.sendWebhook(ctx.channel, ctx.author.display_name, ctx.author.avatar_url, "".join(reversed_msg))
+    await ctx.message.delete()
 
+
+async def _fancy(ctx):
+    message = list(" ".join(ctx.message.content.split()[1:]))
+    fancy_font = '𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏𝒜𝐵𝒞𝒟𝐸𝐹𝒢𝐻𝐼𝒥𝒦𝐿𝑀𝒩𝒪𝒫𝒬𝑅𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵'
+    for i,char in enumerate(message):
+        if char in string.ascii_letters:
+            message[i] = fancy_font[string.ascii_letters.index(char)]
+    await webhooks.sendWebhook(ctx.channel, ctx.author.display_name, ctx.author.avatar_url, "".join(message))
+    await ctx.message.delete()
+
+async def _wide(ctx):
+    message = list(" ".join(ctx.message.content.split()[1:]))
+    fancy_font = 'ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ'
+    for i,char in enumerate(message):
+        if char in string.ascii_letters:
+            message[i] = fancy_font[string.ascii_letters.index(char)]
+    await webhooks.sendWebhook(ctx.channel, ctx.author.display_name, ctx.author.avatar_url, "".join(message))
+    await ctx.message.delete()
 
 async def _namemc(ctx):
     async with ctx.typing():

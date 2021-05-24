@@ -1,7 +1,7 @@
 import discord
 import typing
 from discord.ext import commands, tasks
-from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc
+from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc, _upsidedown, _fancy, _wide
 from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
 from gaming.connectfour import _connect4
@@ -167,6 +167,17 @@ async def nextbirth(ctx):
 async def weather(ctx):
     await _weather(ctx)
 
+@client.command(aliases=["ud", "flip"])
+async def upsidedown(ctx):
+    await _upsidedown(ctx)
+
+@client.command()
+async def fancy(ctx):
+    await _fancy(ctx)
+
+@client.command()
+async def wide(ctx):
+    await _wide(ctx)
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
