@@ -90,8 +90,8 @@ async def bwleaderboard(ctx, equation):
     await _bedwarsleaderboard(ctx, equation)
 
 @client.command(aliases=["gbwlb", "graph"])
-async def graphleaderboard(ctx, equation, page: typing.Optional[int] = 1):
-    await _graphleaderboard(ctx, equation, page)
+async def graphleaderboard(ctx, equation):
+    await _graphleaderboard(ctx, equation)
 
 @client.command()
 async def quote(ctx):

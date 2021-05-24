@@ -39,7 +39,7 @@ async def _bedwarsleaderboard(ctx, equation):
         output += "```"
         await ctx.send(output)
 
-async def _graphleaderboard(ctx, equation, page):
+async def _graphleaderboard(ctx, equation):
     async with ctx.typing():
 
         temp_id = str(round(random.random()*100000))+".png"
@@ -48,10 +48,6 @@ async def _graphleaderboard(ctx, equation, page):
             contents = player_file.read().split()
         all_stats = hypixel.getAllPlayerBwStats(contents)
         lb = leaderboard(all_stats, equation)
-        if page * 10 > len(lb):
-            lb = lb[page*10-10:]
-        else:
-            lb = lb[page*10-10:page*10]
 
         names = [x[0] for x in lb[::-1]]
         scores = [x[1] for x in lb[::-1]]
@@ -59,8 +55,8 @@ async def _graphleaderboard(ctx, equation, page):
         plt.clf()
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        ax.barh(names, scores, color="lavender")
-        plt.title(f'{equation} (Page {page})', color="white")
+        ax.barh(names, scores, color="white")
+        plt.title(f'{equation}', color="white")
         plt.tight_layout()
 
         ax.spines['bottom'].set_color('white')
