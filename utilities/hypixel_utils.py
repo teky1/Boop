@@ -53,13 +53,46 @@ def getUUIDBwStats(uuid, doReturn=True, result=None):
         "beds_broken": bw_data["beds_broken_bedwars"],
         "bb": bw_data["beds_broken_bedwars"],
         "beds_lost": bw_data["beds_lost_bedwars"],
-        "bl": bw_data["beds_lost_bedwars"]
+        "bl": bw_data["beds_lost_bedwars"],
+        "solo_w": bw_data["eight_one_wins_bedwars"] if "eight_one_wins_bedwars" in bw_data else 0,
+        "solo_l": bw_data["eight_one_losses_bedwars"] if "eight_one_losses_bedwars" in bw_data else 0,
+        "solo_fk": bw_data["eight_one_final_kills_bedwars"] if "eight_one_final_kills_bedwars" in bw_data else 0,
+        "solo_fd": bw_data["eight_one_final_deaths_bedwars"] if "eight_one_final_deaths_bedwars" in bw_data else 0,
+        "solo_k": bw_data["eight_one_kills_bedwars"] if "eight_one_kills_bedwars" in bw_data else 0,
+        "solo_d": bw_data["eight_one_deaths_bedwars"] if "eight_one_deaths_bedwars" in bw_data else 0,
+        "solo_bb": bw_data["eight_one_beds_broken_bedwars"] if "eight_one_beds_broken_bedwars" in bw_data else 0,
+        "solo_bl": bw_data["eight_one_beds_lost_bedwars"] if "eight_one_beds_lost_bedwars" in bw_data else 0,
+        "doubles_w": bw_data["eight_two_wins_bedwars"] if "eight_two_wins_bedwars" in bw_data else 0,
+        "doubles_l": bw_data["eight_two_losses_bedwars"] if "eight_two_losses_bedwars" in bw_data else 0,
+        "doubles_fk": bw_data["eight_two_final_kills_bedwars"] if "eight_two_final_kills_bedwars" in bw_data else 0,
+        "doubles_fd": bw_data["eight_two_final_deaths_bedwars"] if "eight_two_final_deaths_bedwars" in bw_data else 0,
+        "doubles_k": bw_data["eight_two_kills_bedwars"] if "eight_two_kills_bedwars" in bw_data else 0,
+        "doubles_d": bw_data["eight_two_deaths_bedwars"] if "eight_two_deaths_bedwars" in bw_data else 0,
+        "doubles_bb": bw_data["eight_two_beds_broken_bedwars"] if "eight_two_beds_broken_bedwars" in bw_data else 0,
+        "doubles_bl": bw_data["eight_two_beds_lost_bedwars"] if "eight_two_beds_lost_bedwars" in bw_data else 0,
+        "threes_w": bw_data["four_three_wins_bedwars"] if "four_three_wins_bedwars" in bw_data else 0,
+        "threes_l": bw_data["four_three_losses_bedwars"] if "four_three_losses_bedwars" in bw_data else 0,
+        "threes_fk": bw_data["four_three_final_kills_bedwars"] if "four_three_final_kills_bedwars" in bw_data else 0,
+        "threes_fd": bw_data["four_three_final_deaths_bedwars"] if "four_three_final_deaths_bedwars" in bw_data else 0,
+        "threes_k": bw_data["four_three_kills_bedwars"] if "four_three_kills_bedwars" in bw_data else 0,
+        "threes_d": bw_data["four_three_deaths_bedwars"] if "four_three_deaths_bedwars" in bw_data else 0,
+        "threes_bb": bw_data["four_three_beds_broken_bedwars"] if "four_three_beds_broken_bedwars" in bw_data else 0,
+        "threes_bl": bw_data["four_three_beds_lost_bedwars"] if "four_three_beds_lost_bedwars" in bw_data else 0,
+        "fours_w": bw_data["four_four_wins_bedwars"] if "four_four_wins_bedwars" in bw_data else 0,
+        "fours_l": bw_data["four_four_losses_bedwars"] if "four_four_losses_bedwars" in bw_data else 0,
+        "fours_fk": bw_data["four_four_final_kills_bedwars"] if "four_four_final_kills_bedwars" in bw_data else 0,
+        "fours_fd": bw_data["four_four_final_deaths_bedwars"] if "four_four_final_deaths_bedwars" in bw_data else 0,
+        "fours_k": bw_data["four_four_kills_bedwars"] if "four_four_kills_bedwars" in bw_data else 0,
+        "fours_d": bw_data["four_four_deaths_bedwars"] if "four_four_deaths_bedwars" in bw_data else 0,
+        "fours_bb": bw_data["four_four_beds_broken_bedwars"] if "four_four_beds_broken_bedwars" in bw_data else 0,
+        "fours_bl": bw_data["four_four_beds_lost_bedwars"] if "four_four_beds_lost_bedwars" in bw_data else 0,
     }
     if doReturn:
         return op
     else:
         result.result[ign] = op
 
+'''
 def getIGNBwStats(ign):
     uuid = returnUUID(ign)
     data = requests.get(f"https://api.hypixel.net/player?key={api_key}&uuid={uuid}").json()["player"]
@@ -85,7 +118,7 @@ def getIGNBwStats(ign):
         "bl": bw_data["beds_lost_bedwars"]
     }
     return op
-
+'''
 def getAllPlayerBwStats(contents):
 
     stats_results = Result()

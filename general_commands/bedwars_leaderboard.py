@@ -6,7 +6,11 @@ import os
 import discord
 
 async def _bwterms(ctx):
-    await ctx.send("The available data for BW is: level (star), wins (w), losses (l), final_kills (fk), final_deaths (fd), kills (k), deaths (d), beds_broken (bb), beds_lost (bl)")
+    await ctx.send("**OVERALL DATA:**\n\nlevel (star), wins (w), losses (l), final_kills (fk), final_deaths (fd), kills (k), deaths (d), beds_broken (bb), beds_lost (bl)\n\n"
+                   "**SPECIFIC MODES:**\n\nFormat: gametype\\_stat\n"
+                   "For example, to get solo wins you would do solo_w or to get fours bed breaks you would do fours_bb.\n(gametypes are: solo, doubles, threes, fours)\n"
+                   "\n**Note:** Full stat names such as wins and final_kills cannot be used for specific modes, their abbreviations must be used (w and fk)\n"
+                   )
 
 async def _bwscore(ctx, ign, equation):
     values = hypixel.getIGNBwStats(ign)
@@ -83,7 +87,10 @@ def scoreFromList(list):
 def leaderboard(player_data, equation):
     scores = []
     for person in player_data:
-        score = round(float(interpreter.interpret(player_data[person], equation)), 2)
+        try:
+            score = round(float(interpreter.interpret(player_data[person], equation)), 2)
+        except ZeroDivisionError:
+            score = 0.0
         scores.append([person, score])
     scores = sorted(scores, key=scoreFromList, reverse=True)
     return scores
