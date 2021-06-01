@@ -142,7 +142,7 @@ def map_game_id_to_name(session_dict):
 
     classic_games = []
 
-    ignore_name = ["LEGACY", "ARCADE", "PROTOTYPE", "DUELS"]
+    ignore_name = ["LEGACY", "ARCADE", "PROTOTYPE", "DUELS", "BEDWARS"]
     dont_ignore_name = ["SKYBLOCK"]
 
     if session_dict["gameType"] in single_types:

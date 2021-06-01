@@ -88,10 +88,13 @@ def interpret(values, equation):
         answer = float(temp_equation_list[0]) + float(temp_equation_list[1])
     elif simplified_equation.count("-")>0:
         temp_equation_list = simplified_equation.split("-")
-        for i in values:
-            if temp_equation_list[0].lower() == i: temp_equation_list[0]=values[i]
-            if temp_equation_list[1].lower() == i: temp_equation_list[1] = values[i]
-        answer = float(temp_equation_list[0]) - float(temp_equation_list[1])
+        if "" in temp_equation_list:
+            answer = -1*float(temp_equation_list[0]+temp_equation_list[1])
+        else:
+            for i in values:
+                if temp_equation_list[0].lower() == i: temp_equation_list[0]=values[i]
+                if temp_equation_list[1].lower() == i: temp_equation_list[1] = values[i]
+            answer = float(temp_equation_list[0]) - float(temp_equation_list[1])
     else:
         for i in values:
             if simplified_equation == i:
