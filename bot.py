@@ -1,4 +1,5 @@
 import discord
+import discord_components
 import typing
 from discord.ext import commands, tasks
 from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc, _upsidedown, _fancy, _wide
@@ -30,6 +31,7 @@ with open("data/c4games.json") as in_file:
 
 @client.event
 async def on_ready():
+    discord_components.DiscordComponents(client)
     await begin()
 
 
@@ -125,7 +127,7 @@ async def simp(ctx):
 
 @client.command(aliases=["hi"])
 async def hello(ctx):
-    await _hello(ctx)
+    await _hello(ctx, client)
 
 
 @client.command(aliases=["ign"])
