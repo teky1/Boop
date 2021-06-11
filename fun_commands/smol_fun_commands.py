@@ -3,6 +3,7 @@ import json
 import random
 import requests
 import string
+from discord_components import Button, ButtonStyle
 import utilities.equation_interpreter as interpreter
 import utilities.webhook_utils as webhooks
 
@@ -93,11 +94,63 @@ async def _simp(ctx):
         else:
             await ctx.send("!simp needs a subject to simp for")
 
+async def isHelloTarget(person1, person2, interaction):
+    if person1 == person2:
+        return True
+    else:
+        await interaction.respond
 
-async def _hello(ctx):
-    async with ctx.typing():
-        await ctx.send("heyyy world ;)")
-    return
+async def _hello(ctx, client):
+    # async with ctx.typing():
+    #     await ctx.send("heyyy world ;)")
+    # return
+
+    goodButton = Button(label="I'm doing good!",  style=ButtonStyle.green, emoji="😁")
+    badButton = Button(label="I'm doing bad!", style=ButtonStyle.red, emoji="😔")
+    mehButton = Button(label="I'm doing meh..", style=ButtonStyle.grey, emoji="😕")
+    idkButton = Button(label="idek bro lmao", style=ButtonStyle.blue, emoji="🤷‍♂️")
+    response = await ctx.reply("Hello! How are you doing today?", components=[[
+        goodButton,
+        badButton
+    ],
+    [
+        mehButton,
+        idkButton
+    ]])
+    interactionRecieved = False
+    while interactionRecieved is False:
+        interaction = await client.wait_for("button_click", check=lambda i : i.component.id in [goodButton.id, badButton.id, mehButton.id, idkButton.id])
+
+        if interaction.message.mentions[0] == interaction.author:
+            interactionRecieved = True
+        else:
+
+            await interaction.respond(content="I don't remember asking *you* :/")
+            print("roasted " + str(interaction.author))
+
+    if interaction.component.id == goodButton.id:
+        await interaction.respond(content="That's good to hear!", ephemeral=False)
+    elif interaction.component.id == badButton.id:
+        await interaction.respond(content="Oh no! Hope you feel better!", ephemeral=False)
+    elif interaction.component.id == mehButton.id:
+        await interaction.respond(content="We all have those days :/", ephemeral=False)
+    elif interaction.component.id == idkButton.id:
+        await interaction.respond(content="damn", ephemeral=False)
+
+    goodButton.disabled = True
+    badButton.disabled = True
+    mehButton.disabled = True
+    idkButton.disabled = True
+
+    await response.edit(components=[[
+        goodButton,
+        badButton
+    ],
+    [
+        mehButton,
+        idkButton
+    ]])
+
 async def _upsidedown(ctx):
     message = " ".join(ctx.message.content.split()[1:])
     flipped_chars = "Z⅄XMΛ∩⊥SᴚΌԀONW˥⋊ſIH⅁ℲƎ◖Ɔ𐐒∀zʎxʍʌnʇsɹbdouɯןʞɾıɥƃɟǝpɔqɐ"[::-1]
