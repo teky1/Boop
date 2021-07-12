@@ -8,8 +8,8 @@ border = 8
 percycle = 1
 theattempts = 3
 attemptincrement = 1
-coordx = 118
-coordy = 244
+coordx = 124
+coordy = 248
 ogpfpsize = 86
 
 pfps = []
