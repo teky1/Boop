@@ -1,19 +1,19 @@
 {
     "258048636653535234": {
         "wins": 10,
-        "ties": 15,
+        "ties": 16,
         "losses": 10,
         "rock": 6,
         "paper": 12,
-        "scissors": 3
+        "scissors": 4
     },
     "475429436137668630": {
         "wins": 22,
-        "ties": 25,
+        "ties": 26,
         "losses": 17,
         "rock": 13,
         "paper": 17,
-        "scissors": 17
+        "scissors": 18
     },
     "720288689141579776": {
         "wins": 4,
