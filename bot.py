@@ -12,6 +12,7 @@ from general_commands.online_cmd import _online
 from general_commands.birthdays import _birthdays, _birth, _nextbirth
 from general_commands.weather_cmd import _weather
 from general_commands.smp_cmds import _smp
+from general_commands.banner import _banner
 from objects.rpslist_obj import Rpsgames
 from objects.tttgames_obj import TTTGames
 from objects.c4games_obj import C4games
@@ -180,6 +181,11 @@ async def fancy(ctx):
 @client.command()
 async def wide(ctx):
     await _wide(ctx)
+
+@client.command()
+async def banner(ctx, person: typing.Optional[discord.User]):
+    target = ctx.author if person is None else person
+    await _banner(ctx, target)
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
