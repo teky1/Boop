@@ -1,15 +1,16 @@
 import math
 import random
+import discord
 
-minsize = 12
+minsize = 50
 minspacing = 3
 border = 8
 percycle = 1
 theattempts = 3
 attemptincrement = 1
-coordx = 120
-coordy = 240
-ogpfpsize = 80
+coordx = 118
+coordy = 244
+ogpfpsize = 86
 
 pfps = []
 
@@ -113,23 +114,24 @@ def tweak():
 def generate():
     global pfps
     global minsize
+    minsize = 50
     k = 0
-    while k < 15:
+    while k < 50:
         j = 0
-        while j < 20:
+        while j < 15:
             newdots()
             makebig()
             if minsize >= 12:
-                minsize -= 1
+                minsize -= 0.5
             j += 1
 
         j = 0
-        while j < 20:
+        while j < 30:
             tweak()
             makebig()
             j += 1
         k += 1
-    #return pfps
+    # return pfps
 
 
 def check():
@@ -141,12 +143,22 @@ def check():
     return 0
 
 
-def importmenoballs():
+async def importmenoballs(message):
     global pfps
+    pfps = []
     generate()
+    fails = 0
     while check():
         print("check failed!!")
+        if fails == 0:
+            await message.edit(message.content+" ... uhm")
+        elif fails == 1:
+            await message.edit(message.content+" ... uhm ... oh no")
+        elif fails == 2:
+            await message.edit(message.content+" ... uhm ... oh no ... this is hard ok :(")
+        elif fails > 2:
+            await message.edit(message.content + " ... uhm ... oh no ... this is hard ok :(" + (fails - 2) * " :(")
+        fails += 1
         pfps = []
         generate()
-
     return pfps

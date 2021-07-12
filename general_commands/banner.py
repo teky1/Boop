@@ -24,9 +24,10 @@ def createPfpThing(status, pfp_path):
 
     return img
 
-def doTheThing(pfp_path):
+
+async def doTheThing(pfp_path, message):
     image_path = f"data/banner_stuff/temp/{random.randrange(5, 1000000)}.png"
-    locations = placer()
+    locations = await placer(message)
     print("starting image process")
     locations = [[z*SCALING_SIZE for z in x] for x in locations]
     background = Image.new("RGBA", (600*SCALING_SIZE, 240*SCALING_SIZE), (24, 25, 28, 255))
@@ -36,6 +37,7 @@ def doTheThing(pfp_path):
     background.save(image_path)
     return image_path
 
+
 async def _banner(ctx: commands.Context, person):
     target = person
     message = await ctx.reply("Loading... (This could take a lil bit so)")
@@ -44,6 +46,6 @@ async def _banner(ctx: commands.Context, person):
     with open(f"data/banner_stuff/temp/{target.id}.png", "wb") as pfp_file:
         pfp_file.write(resp.content)
 
-    output = doTheThing(f"data/banner_stuff/temp/{target.id}.png")
+    output = await doTheThing(f"data/banner_stuff/temp/{target.id}.png", message)
     await ctx.send(file=discord.File(output), content="")
     await message.delete()
