@@ -13,7 +13,7 @@ async def _bwterms(ctx):
                    )
 
 async def _bwscore(ctx, ign, equation):
-    values = hypixel.getIGNBwStats(ign)
+    values = hypixel.getUUIDBwStats(hypixel.returnUUID(ign))
     score = round(float(interpreter.interpret(values, equation)), 2)
     op = "```\nBed Wars\n"
     op += f"Equation: {equation}\n"

@@ -15,37 +15,37 @@ ogpfpsize = 86
 pfps = []
 
 
-def dist(x, y, newx, newy):
+async def dist(x, y, newx, newy):
     uhm = (x - newx) * (x - newx) + (y - newy) * (y - newy)
     uhm = math.sqrt(uhm)
     return uhm
 
 
-def newdot():
+async def newdot():
     global pfps
     x = 2*minspacing+minsize+random.random()*(600-4*minspacing-2*minsize)
     y = 2 * minspacing + minsize + random.random() * (240 - 4 * minspacing - 2 * minsize)
-    if dist(x, y, coordx, coordy) <= (minspacing + minsize * 1.5 + ogpfpsize):
+    if await dist(x, y, coordx, coordy) <= (minspacing + minsize * 1.5 + ogpfpsize):
         return
 
     for pfp in pfps:
-        if dist(x, y, pfp[1], pfp[2]) <= minspacing + minsize + pfp[0]:
+        if await dist(x, y, pfp[1], pfp[2]) <= minspacing + minsize + pfp[0]:
             return
     pfps.append([0, x, y])
 
 
-def newdots():
+async def newdots():
     global pfps
     start = len(pfps)
     attempts = 0
     while len(pfps) < start + percycle:
-        newdot()
+        await newdot()
         attempts += 1
         if attempts > 200:
             return
 
 
-def makebig():
+async def makebig():
     global pfps
     finished = False
     attempts = 0
@@ -53,7 +53,7 @@ def makebig():
         finished = True
         for thispfp in pfps:
             tooclose = False
-            if dist(thispfp[1], thispfp[2], coordx, coordy) <= (minspacing + thispfp[0]*1.1 + ogpfpsize*1.1):
+            if await dist(thispfp[1], thispfp[2], coordx, coordy) <= (minspacing + thispfp[0]*1.1 + ogpfpsize*1.1):
                 tooclose = True
             elif(thispfp[1] < thispfp[0] + border) or (thispfp[2] < thispfp[0] + border) or \
                     (thispfp[1] > 600 - thispfp[0] - border) or (thispfp[2] > 240 - thispfp[0] - border):
@@ -61,7 +61,7 @@ def makebig():
             else:
                 for pfp in pfps:
                     if thispfp != pfp:
-                        if dist(thispfp[1], thispfp[2], pfp[1], pfp[2]) <= (minspacing + thispfp[0]*1.1 + pfp[0]*1.1):
+                        if await dist(thispfp[1], thispfp[2], pfp[1], pfp[2]) <= (minspacing + thispfp[0]*1.1 + pfp[0]*1.1):
                             tooclose = True
                         else:
                             finished = False
@@ -70,7 +70,7 @@ def makebig():
         attempts += 1
 
 
-def tweak():
+async def tweak():
     global pfps
     xlist = []
     ylist = []
@@ -111,7 +111,7 @@ def tweak():
         pfps[i][2] += ylist[i]
 
 
-def generate():
+async def generate():
     global pfps
     global minsize
     minsize = 50
@@ -119,22 +119,22 @@ def generate():
     while k < 50:
         j = 0
         while j < 15:
-            newdots()
-            makebig()
+            await newdots()
+            await makebig()
             if minsize >= 12:
                 minsize -= 0.5
             j += 1
 
         j = 0
         while j < 30:
-            tweak()
-            makebig()
+            await tweak()
+            await makebig()
             j += 1
         k += 1
     # return pfps
 
 
-def check():
+async def check():
     global pfps
     for thispfp in pfps:
         if (thispfp[1] < thispfp[0] + border + 1) or (thispfp[2] < thispfp[0] + border + 1) or \
@@ -146,7 +146,7 @@ def check():
 async def importmenoballs(message):
     global pfps
     pfps = []
-    generate()
+    await generate()
     fails = 0
     while check():
         print("check failed!!")
@@ -160,5 +160,5 @@ async def importmenoballs(message):
             await message.edit(message.content + " ... uhm ... oh no ... this is hard ok :(" + (fails - 2) * " :(")
         fails += 1
         pfps = []
-        generate()
+        await generate()
     return pfps
