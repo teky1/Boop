@@ -29,6 +29,19 @@ c4games = C4games()
 with open("data/c4games.json") as in_file:
     c4games.games = json.load(in_file)
 
+#escape, amongus, boop testing
+SAFE_SERVERS = [817412054050799626, 748241629747347556, 811439515830714378]
+
+def dox_risk():
+    async def predicate(ctx):
+        return ctx.guild.id in SAFE_SERVERS
+    return commands.check(predicate)
+
+@client.event
+async def on_command_error(ctx: commands.Context, error):
+    if isinstance(error, commands.CheckFailure):
+        await ctx.send("This command is not available in this server.")
+
 
 @client.event
 async def on_ready():
@@ -74,6 +87,7 @@ async def registered(ctx):
 
 
 @client.command()
+@dox_risk()
 async def register(ctx, ign):
     await _register(ctx, ign)
 
@@ -154,6 +168,7 @@ async def birthdays(ctx):
 
 
 @client.command()
+@dox_risk()
 async def birth(ctx):
     await _birth(ctx, client)
 
@@ -167,6 +182,7 @@ async def nextbirth(ctx):
 #    await _smp(ctx)
 
 @client.command()
+@dox_risk()
 async def weather(ctx):
     await _weather(ctx)
 

@@ -79,7 +79,7 @@ async def tweak():
         avoidy = 0
         for pfp in pfps:
             if thispfp != pfp:
-                thedistance = dist(thispfp[1], thispfp[2], pfp[1], pfp[2])
+                thedistance = await dist(thispfp[1], thispfp[2], pfp[1], pfp[2])
                 repel = 1/math.pow(thedistance - thispfp[0] - pfp[0], 2)
                 xdist = thispfp[1]-pfp[1]
                 ydist = thispfp[2]-pfp[2]
@@ -96,7 +96,7 @@ async def tweak():
         else:
             angle = math.atan(xdist / ydist) + math.pi
 
-        ogrepel = math.pow(dist(thispfp[1], thispfp[2], coordx, coordy) - thispfp[0] - ogpfpsize, 2)
+        ogrepel = math.pow(await dist(thispfp[1], thispfp[2], coordx, coordy) - thispfp[0] - ogpfpsize, 2)
         avoidx += math.sin(angle)/ogrepel
         avoidy += math.cos(angle)/ogrepel
 
@@ -148,7 +148,7 @@ async def importmenoballs(message):
     pfps = []
     await generate()
     fails = 0
-    while check():
+    while await check():
         print("check failed!!")
         if fails == 0:
             await message.edit(message.content+" ... uhm")

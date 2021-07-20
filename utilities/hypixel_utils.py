@@ -38,6 +38,8 @@ def getUUIDBwStats(uuid, doReturn=True, result=None):
     op = {
         "level": data["achievements"]["bedwars_level"],
         "star": data["achievements"]["bedwars_level"],
+        "current_winstreak": bw_data["winstreak"],
+        "ws": bw_data["winstreak"],
         "wins": bw_data["wins_bedwars"],
         "w": bw_data["wins_bedwars"],
         "losses": bw_data["losses_bedwars"],
@@ -62,6 +64,7 @@ def getUUIDBwStats(uuid, doReturn=True, result=None):
         "solo_d": bw_data["eight_one_deaths_bedwars"] if "eight_one_deaths_bedwars" in bw_data else 0,
         "solo_bb": bw_data["eight_one_beds_broken_bedwars"] if "eight_one_beds_broken_bedwars" in bw_data else 0,
         "solo_bl": bw_data["eight_one_beds_lost_bedwars"] if "eight_one_beds_lost_bedwars" in bw_data else 0,
+        "solo_ws": bw_data["eight_one_winstreak"] if "eight_one_winstreak" in bw_data else 0,
         "doubles_w": bw_data["eight_two_wins_bedwars"] if "eight_two_wins_bedwars" in bw_data else 0,
         "doubles_l": bw_data["eight_two_losses_bedwars"] if "eight_two_losses_bedwars" in bw_data else 0,
         "doubles_fk": bw_data["eight_two_final_kills_bedwars"] if "eight_two_final_kills_bedwars" in bw_data else 0,
@@ -70,6 +73,7 @@ def getUUIDBwStats(uuid, doReturn=True, result=None):
         "doubles_d": bw_data["eight_two_deaths_bedwars"] if "eight_two_deaths_bedwars" in bw_data else 0,
         "doubles_bb": bw_data["eight_two_beds_broken_bedwars"] if "eight_two_beds_broken_bedwars" in bw_data else 0,
         "doubles_bl": bw_data["eight_two_beds_lost_bedwars"] if "eight_two_beds_lost_bedwars" in bw_data else 0,
+        "doubles_ws": bw_data["eight_two_winstreak"] if "eight_two_winstreak" in bw_data else 0,
         "threes_w": bw_data["four_three_wins_bedwars"] if "four_three_wins_bedwars" in bw_data else 0,
         "threes_l": bw_data["four_three_losses_bedwars"] if "four_three_losses_bedwars" in bw_data else 0,
         "threes_fk": bw_data["four_three_final_kills_bedwars"] if "four_three_final_kills_bedwars" in bw_data else 0,
@@ -78,6 +82,7 @@ def getUUIDBwStats(uuid, doReturn=True, result=None):
         "threes_d": bw_data["four_three_deaths_bedwars"] if "four_three_deaths_bedwars" in bw_data else 0,
         "threes_bb": bw_data["four_three_beds_broken_bedwars"] if "four_three_beds_broken_bedwars" in bw_data else 0,
         "threes_bl": bw_data["four_three_beds_lost_bedwars"] if "four_three_beds_lost_bedwars" in bw_data else 0,
+        "threes_ws": bw_data["four_three_winstreak"] if "four_three_winstreak" in bw_data else 0,
         "fours_w": bw_data["four_four_wins_bedwars"] if "four_four_wins_bedwars" in bw_data else 0,
         "fours_l": bw_data["four_four_losses_bedwars"] if "four_four_losses_bedwars" in bw_data else 0,
         "fours_fk": bw_data["four_four_final_kills_bedwars"] if "four_four_final_kills_bedwars" in bw_data else 0,
@@ -86,6 +91,7 @@ def getUUIDBwStats(uuid, doReturn=True, result=None):
         "fours_d": bw_data["four_four_deaths_bedwars"] if "four_four_deaths_bedwars" in bw_data else 0,
         "fours_bb": bw_data["four_four_beds_broken_bedwars"] if "four_four_beds_broken_bedwars" in bw_data else 0,
         "fours_bl": bw_data["four_four_beds_lost_bedwars"] if "four_four_beds_lost_bedwars" in bw_data else 0,
+        "fours_ws": bw_data["four_four_winstreak"] if "four_four_winstreak" in bw_data else 0,
     }
     if doReturn:
         return op

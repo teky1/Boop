@@ -6,7 +6,7 @@ import os
 import discord
 
 async def _bwterms(ctx):
-    await ctx.send("**OVERALL DATA:**\n\nlevel (star), wins (w), losses (l), final_kills (fk), final_deaths (fd), kills (k), deaths (d), beds_broken (bb), beds_lost (bl)\n\n"
+    await ctx.send("**OVERALL DATA:**\n\nlevel (star), wins (w), losses (l), final_kills (fk), final_deaths (fd), kills (k), deaths (d), beds_broken (bb), beds_lost (bl), current_winstreak* (ws)\n\n*The current winstreak is the players **current** winstreak and not their highest ever winstreak.\n\n"
                    "**SPECIFIC MODES:**\n\nFormat: gametype\\_stat\n"
                    "For example, to get solo wins you would do solo_w or to get fours bed breaks you would do fours_bb.\n(gametypes are: solo, doubles, threes, fours)\n"
                    "\n**Note:** Full stat names such as wins and final_kills cannot be used for specific modes, their abbreviations must be used (w and fk)\n"
@@ -23,7 +23,7 @@ async def _bwscore(ctx, ign, equation):
 
 async def _bedwarsleaderboard(ctx, equation):
     async with ctx.typing():
-        with open("data/registered_players.txt", "r") as player_file:
+        with open("data/lb_registered.txt", "r") as player_file:
             contents = player_file.read().split()
         all_stats = hypixel.getAllPlayerBwStats(contents)
         lb = leaderboard(all_stats, equation)
@@ -48,7 +48,7 @@ async def _graphleaderboard(ctx, equation):
 
         temp_id = str(round(random.random()*100000))+".png"
 
-        with open("data/registered_players.txt", "r") as player_file:
+        with open("data/lb_registered.txt", "r") as player_file:
             contents = player_file.read().split()
         all_stats = hypixel.getAllPlayerBwStats(contents)
         lb = leaderboard(all_stats, equation)
