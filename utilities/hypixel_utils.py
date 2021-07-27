@@ -164,7 +164,7 @@ def map_game_id_to_name(session_dict):
             for x in game_mapper_data:
                 if x["key"] == session_dict["gameType"]:
                     for y in x["modes"]:
-                        if y["key"] == session_dict["mode"]:
+                        if f"{x['key']}_{y['key']}" == session_dict["mode"] or y["key"] == session_dict["mode"]:
                             return y["name"]
     elif session_dict["gameType"] in dont_ignore_name:
         if session_dict["mode"] == "LOBBY":
