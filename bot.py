@@ -2,7 +2,7 @@ import discord
 import discord_components
 import typing
 from discord.ext import commands, tasks
-from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc, _upsidedown, _fancy, _wide
+from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc, _upsidedown, _fancy, _wide, _kiera
 from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
 from gaming.connectfour import _connect4
@@ -202,6 +202,11 @@ async def wide(ctx):
 async def banner(ctx, person: typing.Optional[discord.User]):
     target = ctx.author if person is None else person
     await _banner(ctx, target)
+
+@client.command()
+async def kiera(ctx):
+    await _kiera(ctx)
+
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()

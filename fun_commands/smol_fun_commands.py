@@ -188,3 +188,8 @@ async def _namemc(ctx):
             return
         await ctx.send(f"https://namemc.com/profile/{parameters[1]}")
     return
+
+async def _kiera(ctx):
+    ranks_gifted = requests.get("https://api.hypixel.net/player?key=8803f760-c698-43c9-b469-f0a6594f963a&uuid=7916fac35c824198b0043ef4cfd8055c").json()
+    ranks_gifted = ranks_gifted["player"]["giftingMeta"]["ranksGiven"]
+    await ctx.send(f"Kiera has gifted **{ranks_gifted}** frikin ranks1!! dm her and tell her to stop :)")
