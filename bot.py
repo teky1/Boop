@@ -13,6 +13,7 @@ from general_commands.birthdays import _birthdays, _birth, _nextbirth
 from general_commands.weather_cmd import _weather
 from general_commands.smp_cmds import _smp
 from general_commands.banner import _banner
+from general_commands.mutuals import _mutuals
 from objects.rpslist_obj import Rpsgames
 from objects.tttgames_obj import TTTGames
 from objects.c4games_obj import C4games
@@ -206,6 +207,17 @@ async def banner(ctx, person: typing.Optional[discord.User]):
 @client.command()
 async def kiera(ctx):
     await _kiera(ctx)
+
+@client.command(name="mutuals")
+async def mutuals(ctx, person1, person2, page: typing.Optional[int] = 1):
+    await _mutuals(ctx, person1, person2, page)
+
+@mutuals.error
+async def mutuals_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("**Correct Format:** !mutuals <person1> <person2>\n\nExample: !mutuals teky1 when_u")
+    else:
+        raise error
 
 
 with open("bot_key.txt", "r") as file:

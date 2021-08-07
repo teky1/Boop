@@ -252,3 +252,9 @@ def check(contents):
             output_list.append([result.result[3], result.result[1], result.result[2]])
 
     return output_list
+
+def getFriends(uuid):
+    response = requests.get(f"https://api.hypixel.net/friends?key={api_key}&uuid={uuid}").json()
+    friend_uuids = [friend["uuidSender"] if friend["uuidReceiver"] == uuid else friend["uuidReceiver"] for friend in response["records"]]
+    return friend_uuids
+
