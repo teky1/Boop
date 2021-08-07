@@ -16,7 +16,7 @@ async def _mutuals(ctx, person1, person2, page):
             mutual_uuids.append(friend)
 
     if len(mutual_uuids) == 0:
-        await ctx.reply("These two people have no mutual friends :P")
+        await msg.edit(content="These two people have no mutual friends :P")
         return
 
     page_count = math.ceil(len(mutual_uuids)/15)
