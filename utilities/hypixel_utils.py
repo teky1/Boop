@@ -258,3 +258,7 @@ def getFriends(uuid):
     friend_uuids = [friend["uuidSender"] if friend["uuidReceiver"] == uuid else friend["uuidReceiver"] for friend in response["records"]]
     return friend_uuids
 
+def getBwQuestData(ign):
+    uuid = returnUUID(ign)
+    resp = requests.get(f"https://api.hypixel.net/player?key={api_key}&uuid={uuid}").json()["player"]["quests"]
+    return resp

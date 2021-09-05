@@ -14,6 +14,7 @@ from general_commands.weather_cmd import _weather
 from general_commands.smp_cmds import _smp
 from general_commands.banner import _banner
 from general_commands.mutuals import _mutuals
+from general_commands.bedwars_cmds import _bwquests
 from objects.rpslist_obj import Rpsgames
 from objects.tttgames_obj import TTTGames
 from objects.c4games_obj import C4games
@@ -42,6 +43,8 @@ def dox_risk():
 async def on_command_error(ctx: commands.Context, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send("This command is not available in this server.")
+    else:
+        raise error
 
 
 @client.event
@@ -219,6 +222,21 @@ async def mutuals_error(ctx, error):
     else:
         raise error
 
+@client.command(aliases=["bwquest", "bwq"])
+async def bwquests(ctx, ign):
+    await _bwquests(ctx, ign)
+
+@bwquests.error
+async def bwquests_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("**Correct Format:** !bwquests <ign> OR !bwq <ign>")
+    elif isinstance(error, commands.CommandInvokeError):
+        if isinstance(error.original, json.decoder.JSONDecodeError) or isinstance(error.original, TypeError):
+            await ctx.send("Could not find a player by that name.")
+        else:
+            raise error
+    else:
+        raise error
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
