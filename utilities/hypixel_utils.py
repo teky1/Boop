@@ -262,3 +262,6 @@ def getBwQuestData(ign):
     uuid = returnUUID(ign)
     resp = requests.get(f"https://api.hypixel.net/player?key={api_key}&uuid={uuid}").json()["player"]["quests"]
     return resp
+
+def getGrassSumoWins():
+    return requests.get(f"https://api.hypixel.net/player?key={api_key}&uuid=a6e830d4-766c-4288-a650-04c65c5dfa29").json()

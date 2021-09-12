@@ -1,8 +1,15 @@
+from __future__ import print_function
+import os
 import discord
+from discord.ext import commands
 import json
-import random
-import requests
 import string
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
+import requests
+import random
+
 from discord_components import Button, ButtonStyle
 import utilities.equation_interpreter as interpreter
 import utilities.webhook_utils as webhooks
@@ -193,3 +200,18 @@ async def _kiera(ctx):
     ranks_gifted = requests.get("https://api.hypixel.net/player?key=8803f760-c698-43c9-b469-f0a6594f963a&uuid=7916fac35c824198b0043ef4cfd8055c").json()
     ranks_gifted = ranks_gifted["player"]["giftingMeta"]["ranksGiven"]
     await ctx.send(f"Kiera has gifted **{ranks_gifted}** frikin ranks1!! dm her and tell her to stop :)")
+
+async def _sumograss(ctx: commands.Context):
+    data = requests.get("https://api.hypixel.net/player?key=8803f760-c698-43c9-b469-f0a6594f963a&uuid=a6e830d4-766c-4288-a650-04c65c5dfa29").json()
+    wins = data["player"]["stats"]["Duels"]["sumo_duel_wins"]
+
+    im = Image.open("data/image_tings/top1.png")
+    draw = ImageDraw.Draw(im)
+    font = ImageFont.truetype("data/image_tings/Lato-Black.ttf", 65)
+    draw.text((130, 100), str(wins), (255, 255, 255), font=font)
+    # print(im.format, im.size, im.mode)
+    name = str(random.randint(0, 999999)) + ".png"
+    im.save(name)
+    await ctx.send(file=discord.File(name))
+    os.remove(name)
+
