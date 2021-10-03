@@ -4,15 +4,15 @@ import discord
 from discord.ext import commands
 import json
 import string
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+from io import BytesIO
 import requests
 import random
-
+import colorsys
 from discord_components import Button, ButtonStyle
 import utilities.equation_interpreter as interpreter
 import utilities.webhook_utils as webhooks
+import MinePI
 
 with open("data/boop_gifs.txt") as file:
     boop_gifs = file.read().split()
@@ -214,4 +214,37 @@ async def _sumograss(ctx: commands.Context):
     im.save(name)
     await ctx.send(file=discord.File(name))
     os.remove(name)
+
+async def _spoopyskin(ctx: commands.Context, name):
+    uuid = requests.get("https://api.mojang.com/users/profiles/minecraft/" + name).json()["id"]
+    skin_req = requests.get(f"https://crafatar.com/skins/{uuid}")
+    gray_skin_img = Image.open(BytesIO(skin_req.content)).convert("RGB")
+    skin_mask = Image.open(BytesIO(skin_req.content))
+
+
+    skin_data = gray_skin_img.load()
+
+    for x in range(gray_skin_img.size[0]):
+        for y in range(gray_skin_img.size[1]):
+            px = skin_data[x, y]
+            px = list(colorsys.rgb_to_hsv(px[0]/255, px[1]/255, px[2]/255))
+            px[0] = (px[0]+0.5)%1
+            px = colorsys.hsv_to_rgb(px[0], px[1], px[2])
+            skin_data[x, y] = (int(px[0]*255), int(px[1]*255), int(px[2]*255))
+
+
+    gray_skin_img = ImageOps.grayscale(gray_skin_img)
+    pompkin = Image.open("data/image_tings/pompkin.png").convert("RGBA")
+
+    skin_img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    skin_img.paste(gray_skin_img, (0, 0), skin_mask)
+    skin_img.paste(pompkin, (42, 8), pompkin)
+
+    render = await MinePI.render_3d_skin(skin_image=skin_img)
+    render.save("render.png")
+    skin_img.save("spoopyskin.png")
+    await ctx.send(content="**Skin File:**", files=[discord.File("spoopyskin.png"),discord.File("render.png")])
+    os.remove("spoopyskin.png")
+    os.remove("render.png")
+
 

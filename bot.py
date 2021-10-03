@@ -2,7 +2,7 @@ import discord
 import discord_components
 import typing
 from discord.ext import commands, tasks
-from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc, _upsidedown, _fancy, _wide, _kiera, _sumograss
+from fun_commands.smol_fun_commands import _boop, _repeat, _say, _calc, _quote, _cat, _hello, _simp, _namemc, _upsidedown, _fancy, _wide, _kiera, _sumograss, _spoopyskin
 from gaming.rps import _rps, _duelstats
 from gaming.tictactoe import _tictactoe
 from gaming.connectfour import _connect4
@@ -242,6 +242,18 @@ async def bwquests_error(ctx, error):
 async def sumograss(ctx):
     await _sumograss(ctx)
 
+@client.command()
+async def spoopyskin(ctx, name):
+    await _spoopyskin(ctx, name)
+
+@spoopyskin.error
+async def spoopyskin_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("This command converts any person's skin into a spoopy skin :D"
+                       "\n\n**Correct Format:** !spoopyskin <ign>")
+    else:
+        await ctx.send("An error occurred mbmb :P DM teky if this keeps happening")
+        raise error
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
