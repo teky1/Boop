@@ -228,7 +228,7 @@ async def _spoopyskin(ctx: commands.Context, name):
         for y in range(gray_skin_img.size[1]):
             px = skin_data[x, y]
             px = list(colorsys.rgb_to_hsv(px[0]/255, px[1]/255, px[2]/255))
-            px[0] = (px[0]+0.5)%1
+            px[0] = (px[0]+0.5) % 1
             px = colorsys.hsv_to_rgb(px[0], px[1], px[2])
             skin_data[x, y] = (int(px[0]*255), int(px[1]*255), int(px[2]*255))
 
