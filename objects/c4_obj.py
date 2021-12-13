@@ -146,7 +146,8 @@ class ConnectGame:
                                                 # print(f"{turnpiece}, ({x + 1}, {y + 1})")
                                                 # print(f"WINNING BOARD: {self.array}")
                                                 # print(f"CONSECUTIVE DIRECTION SCORES: {inarow}")
-                                                strat[y][x] = turnpiece + 2
+                                                if strat[y][x] != 2:
+                                                    strat[y][x] = turnpiece + 2
                                                 if y > 0:
                                                     strat[y-1][x] = 2
                                                 space = True
@@ -175,7 +176,7 @@ class ConnectGame:
                                     boardscores.append(-100)
                             elif strat[y][x] == 0:
                                 boardscores.append(realscore[0] + realscore[1]*1.2 + realscore[2]*1.2 + realscore[3]*0.6)
-                            elif strat[y][x] + self.turn == 4:
+                            elif strat[y][x] + self.turn == 4:  # 4 and 0, or 1 and 3
                                 boardscores.append(100)
                             else:
                                 boardscores.append(200)
