@@ -27,6 +27,8 @@ async def _connect4(ctx, issmall, c4games, client):
     columns = output[1]
     note = output[2]
     result = await duelstart(ctx, f"Connect 4 ({columns}x{rows})", client)
+    # [challenger, challenged]
+
     if result == 0:
         return
     # if random.randint(0, 1) == 0:
@@ -36,11 +38,11 @@ async def _connect4(ctx, issmall, c4games, client):
     #     p1 = result[1]
     #     p2 = result[0]
 
-    p3 = c4games.newstart()
+    p3 = c4games.newstart() # returns either [0, 1] or [1, 0]
     p1 = result[p3[0]]
     p2 = result[p3[1]]
 
-    player1 = str(p1)[:-5]
+    player1 = str(p1)[:-5] # gets p1 and p2's names
     player2 = str(p2)[:-5]
 
     c4game = ConnectGame(rows, columns, p1.id, p2.id)  # THE GAME IS CREATED HEREEEEEEEEEEE
@@ -62,8 +64,7 @@ async def _connect4(ctx, issmall, c4games, client):
             rowsleft -= 3
     c4game.messages[2] = tempmessage.id
     c4game.messages[0] = tempmessage.channel.id
-    c4game.messages[3] = await ctx.send(f"{player1} goes first!")
-    c4game.messages[3] = c4game.messages[3].id
+    c4game.messages[3] = (await ctx.send(f"{player1} goes first!")).id
     c4game.messages[1].reverse()
     # [[rowchannelid], [rowids], [reactorid], [infoid]]
 
