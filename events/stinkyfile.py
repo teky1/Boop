@@ -26,6 +26,16 @@ async def stink(message):
             await message.channel.send("am #LUREEN2021")
         elif stinky == "IM" or stinky == "I AM":
             await message.channel.send("#LUREEN2021")
+    elif message.author.id == 217753105276600320 and stinky not in ["you", "u", "youre", "your", "ur", "IM", "I AM"]: # special for brian
+        brian = random.choice(["got my drivers license last week",
+                            "hope you're happy but dont be happier",
+                            "hope i was your favorite crime",
+                            "know you get deja vu",
+                            "guess you moved on really easily"])
+        if stinky == "I":
+            await message.channel.send(brian)
+        # elif stinky == "IM" or stinky == "I AM":
+            # await message.channel.send(brian)
     elif random.randint(0, 1):
         if stinky == "I":
             if random.randint(0, 2):
