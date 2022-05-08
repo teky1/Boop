@@ -15,6 +15,7 @@ from general_commands.smp_cmds import _smp
 from general_commands.banner import _banner
 from general_commands.mutuals import _mutuals
 from general_commands.bedwars_cmds import _bwquests
+from general_commands.hcpss import _hcpss
 from objects.rpslist_obj import Rpsgames
 from objects.tttgames_obj import TTTGames
 from objects.c4games_obj import C4games
@@ -160,11 +161,7 @@ async def online(ctx):
 
 @client.command(aliases=["C4"])
 async def c4(ctx):
-    if ctx.message.content[1:3] == "c4":
-        await _connect4(ctx, True, c4games, client)
-    else:
-        await _connect4(ctx, False, c4games, client)
-
+    await _connect4(ctx, ctx.message.content.startswith("!c4"), c4games, client)
 
 @client.command()
 async def birthdays(ctx):
@@ -254,6 +251,11 @@ async def spoopyskin_error(ctx, error):
     else:
         await ctx.send("An error occurred mbmb :P DM teky if this keeps happening")
         raise error
+
+@dox_risk()
+@client.command(name="hcpss")
+async def hcpss(ctx):
+    await _hcpss(ctx)
 
 with open("bot_key.txt", "r") as file:
     key = file.read().split()
