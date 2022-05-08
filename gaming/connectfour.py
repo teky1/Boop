@@ -132,6 +132,7 @@ async def fourconnect(payload, c4, index, c4games, client):
                         # botdata = c4.recurseai()  # (self, fops, tarray, startturn, depth=3, passdown=[]
                         c4.c4ai()
                         # botinfo = f"(bard chose {botdata[0]+1} with confidence {botdata[1]}"
+                        botinfo = f"tops is {c4.tops}"
                         c4.new = False
                         c4.array[c4.y][c4.x] = c4.turn+1
                         if c4.issmall:
