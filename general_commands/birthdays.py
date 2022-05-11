@@ -16,7 +16,7 @@ async def _birthdays(ctx, client):
             emoji = "❄️"  # dec 21 to march 19 inclusive
         elif filedata["ydate"][each] <= 171:
             emoji = "🌱️"  # up to june 20 inclusive
-        elif filedata["ydate"][each] <= 171:
+        elif filedata["ydate"][each] <= 265:
             emoji = "☀️"  # up to sept 22 inclusive
         else:
             emoji = "🍂"
